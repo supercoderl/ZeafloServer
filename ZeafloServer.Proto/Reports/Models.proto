@@ -1,0 +1,26 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "ZeafloServer.Proto.Reports";
+
+enum ReportStatus {
+     Pending = 0;
+     Resolved = 1;
+     Rejected = 2;
+}
+
+message GrpcReport {
+  string id = 1;
+  string userId = 2;
+  string postId = 3;
+  string reason = 4;
+  ReportStatus status = 5;
+  bool isDeleted = 6;
+}
+
+message GetReportsByIdsResult {
+  repeated GrpcReport reports = 1;
+}
+
+message GetReportsByIdsRequest {
+  repeated string ids = 1;
+}

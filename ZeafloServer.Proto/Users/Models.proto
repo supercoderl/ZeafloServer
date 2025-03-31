@@ -1,0 +1,37 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "ZeafloServer.Proto.Users";
+import "google/protobuf/timestamp.proto";
+
+enum Gender {
+    Male = 0;
+    Female = 1;
+    Other = 2;
+}
+
+message GrpcUser {
+  string id = 1;
+  string username = 2;
+  string email = 3;
+  string fullname = 4;
+  string bio = 5;
+  string avatarUrl = 6;
+  string coverPhotoUrl = 7;
+  string phoneNumber = 8;
+  string website = 9;
+  string location = 10;
+  string qrUrl = 11;
+  google.protobuf.Timestamp birthdate = 12;
+  Gender gender = 13;
+  bool isOnline = 14;
+  google.protobuf.Timestamp lastLoginTime = 15;
+  bool isDeleted = 16;
+}
+
+message GetUsersByIdsResult {
+  repeated GrpcUser users = 1;
+}
+
+message GetUsersByIdsRequest {
+  repeated string ids = 1;
+}

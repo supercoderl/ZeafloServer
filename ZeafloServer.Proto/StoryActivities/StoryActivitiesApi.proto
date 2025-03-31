@@ -1,0 +1,9 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "ZeafloServer.Proto.StoryActivities";
+
+import "StoryActivities/Models.proto";
+
+service StoryActivitiesApi {
+  rpc GetByIds(GetStoryActivitiesByIdsRequest) returns (GetStoryActivitiesByIdsResult);
+}

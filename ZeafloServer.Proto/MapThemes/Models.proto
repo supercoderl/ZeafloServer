@@ -1,0 +1,21 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "ZeafloServer.Proto.MapThemes";
+
+message GrpcMapTheme {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  string mapStyle = 4;
+  string previewUrl = 5;
+  bool isPremium = 6;
+  bool isDeleted = 7;
+}
+
+message GetMapThemesByIdsResult {
+  repeated GrpcMapTheme mapThemes = 1;
+}
+
+message GetMapThemesByIdsRequest {
+  repeated string ids = 1;
+}

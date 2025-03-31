@@ -1,0 +1,9 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "ZeafloServer.Proto.Comments";
+
+import "Comments/Models.proto";
+
+service CommentsApi {
+  rpc GetByIds(GetCommentsByIdsRequest) returns (GetCommentsByIdsResult);
+}

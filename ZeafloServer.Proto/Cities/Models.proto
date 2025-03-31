@@ -1,0 +1,20 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "ZeafloServer.Proto.Cities";
+
+message GrpcCity {
+  string id = 1;
+  string name = 2;
+  string postalCode = 3;
+  double latitude = 4;
+  double longitude = 5;
+  bool isDeleted = 6;
+}
+
+message GetCitiesByIdsResult {
+  repeated GrpcCity cities = 1;
+}
+
+message GetCitiesByIdsRequest {
+  repeated string ids = 1;
+}

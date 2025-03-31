@@ -1,0 +1,25 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "ZeafloServer.Proto.FriendShips";
+
+enum FriendShipStatus {
+	 Pending = 0;
+     Accepted = 1;
+     Blocked = 2;
+}
+
+message GrpcFriendShip {
+  string id = 1;
+  string userId = 2;
+  string friendId = 3;
+  FriendShipStatus status = 4;
+  bool isDeleted = 5;
+}
+
+message GetFriendShipsByIdsResult {
+  repeated GrpcFriendShip friendShips = 1;
+}
+
+message GetFriendShipsByIdsRequest {
+  repeated string ids = 1;
+}

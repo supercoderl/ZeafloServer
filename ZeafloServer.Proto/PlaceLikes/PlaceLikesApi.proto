@@ -1,0 +1,9 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "ZeafloServer.Proto.PlaceLikes";
+
+import "PlaceLikes/Models.proto";
+
+service PlaceLikesApi {
+  rpc GetByIds(GetPlaceLikesByIdsRequest) returns (GetPlaceLikesByIdsResult);
+}

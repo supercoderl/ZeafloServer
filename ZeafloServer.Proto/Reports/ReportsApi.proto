@@ -1,0 +1,9 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "ZeafloServer.Proto.Reports";
+
+import "Reports/Models.proto";
+
+service ReportsApi {
+  rpc GetByIds(GetReportsByIdsRequest) returns (GetReportsByIdsResult);
+}

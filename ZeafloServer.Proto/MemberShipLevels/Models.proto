@@ -1,0 +1,24 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "ZeafloServer.Proto.MemberShipLevels";
+
+enum LevelType {
+     Silver = 0;
+     Gold = 1;
+     Diamond = 2;
+}
+
+message GrpcMemberShipLevel {
+  string id = 1;
+  LevelType type = 2;
+  int32 minPoint = 3;
+  bool isDeleted = 4;
+}
+
+message GetMemberShipLevelsByIdsResult {
+  repeated GrpcMemberShipLevel memberShipLevels = 1;
+}
+
+message GetMemberShipLevelsByIdsRequest {
+  repeated string ids = 1;
+}

@@ -1,0 +1,22 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "ZeafloServer.Proto.Tokens";
+import "google/protobuf/timestamp.proto";
+
+message GrpcToken {
+  string id = 1;
+  string accessToken = 2;
+  string refreshToken = 3;
+  string userId = 4;
+  bool isRefreshTokenRevoked = 5;
+  google.protobuf.Timestamp refreshTokenExpiredDate = 6;
+  bool isDeleted = 7;
+}
+
+message GetTokensByIdsResult {
+  repeated GrpcToken tokens = 1;
+}
+
+message GetTokensByIdsRequest {
+  repeated string ids = 1;
+}

@@ -1,0 +1,9 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "ZeafloServer.Proto.PlaceImages";
+
+import "PlaceImages/Models.proto";
+
+service PlaceImagesApi {
+  rpc GetByIds(GetPlaceImagesByIdsRequest) returns (GetPlaceImagesByIdsResult);
+}

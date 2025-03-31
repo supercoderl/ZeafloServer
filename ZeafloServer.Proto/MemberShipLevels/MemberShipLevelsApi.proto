@@ -1,0 +1,9 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "ZeafloServer.Proto.MemberShipLevels";
+
+import "MemberShipLevels/Models.proto";
+
+service MemberShipLevelsApi {
+  rpc GetByIds(GetMemberShipLevelsByIdsRequest) returns (GetMemberShipLevelsByIdsResult);
+}

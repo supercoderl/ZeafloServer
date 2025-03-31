@@ -1,0 +1,21 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "ZeafloServer.Proto.UserLevels";
+import "google/protobuf/timestamp.proto";
+
+message GrpcUserLevel {
+  string id = 1;
+  string userId = 2;
+  string memberShipLevelId = 3;
+  int32 zeafloPoint = 4;
+  google.protobuf.Timestamp assignedAt = 5;
+  bool isDeleted = 6;
+}
+
+message GetUserLevelsByIdsResult {
+  repeated GrpcUserLevel userLevels = 1;
+}
+
+message GetUserLevelsByIdsRequest {
+  repeated string ids = 1;
+}

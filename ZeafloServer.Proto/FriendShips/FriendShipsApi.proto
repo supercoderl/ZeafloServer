@@ -1,0 +1,9 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "ZeafloServer.Proto.FriendShips";
+
+import "FriendShips/Models.proto";
+
+service FriendShipsApi {
+  rpc GetByIds(GetFriendShipsByIdsRequest) returns (GetFriendShipsByIdsResult);
+}

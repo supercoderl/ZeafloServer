@@ -1,0 +1,18 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "ZeafloServer.Proto.Likes";
+
+message GrpcLike {
+  string id = 1;
+  string userId = 2;
+  string postId = 3;
+  bool isDeleted = 4;
+}
+
+message GetLikesByIdsResult {
+  repeated GrpcLike likes = 1;
+}
+
+message GetLikesByIdsRequest {
+  repeated string ids = 1;
+}

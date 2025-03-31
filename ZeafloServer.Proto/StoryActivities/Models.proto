@@ -1,0 +1,25 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "ZeafloServer.Proto.StoryActivities";
+
+enum ActionType {
+     Send = 0;
+     View = 1;
+     Receive = 2;
+}
+
+message GrpcStoryActivity {
+  string id = 1;
+  string userId = 2;
+  ActionType actionType = 3;
+  int32 pointEarned = 4;
+  bool isDeleted = 5;
+}
+
+message GetStoryActivitiesByIdsResult {
+  repeated GrpcStoryActivity storyActivities = 1;
+}
+
+message GetStoryActivitiesByIdsRequest {
+  repeated string ids = 1;
+}

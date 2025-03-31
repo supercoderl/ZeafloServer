@@ -1,0 +1,19 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "ZeafloServer.Proto.Comments";
+
+message GrpcComment {
+  string id = 1;
+  string postId = 2;
+  string userId = 3;
+  string content = 4;
+  bool isDeleted = 5;
+}
+
+message GetCommentsByIdsResult {
+  repeated GrpcComment comments = 1;
+}
+
+message GetCommentsByIdsRequest {
+  repeated string ids = 1;
+}

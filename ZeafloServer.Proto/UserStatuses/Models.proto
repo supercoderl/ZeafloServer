@@ -1,0 +1,20 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "ZeafloServer.Proto.UserStatuses";
+import "google/protobuf/timestamp.proto";
+
+message GrpcUserStatus {
+  string id = 1;
+  string userId = 2;
+  bool isOnline = 3;
+  google.protobuf.Timestamp lastSeen = 4;
+  bool isDeleted = 5;
+}
+
+message GetUserStatusesByIdsResult {
+  repeated GrpcUserStatus userStatuses = 1;
+}
+
+message GetUserStatusesByIdsRequest {
+  repeated string ids = 1;
+}

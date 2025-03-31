@@ -1,0 +1,32 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "ZeafloServer.Proto.Places";
+
+enum PlaceType {
+     Restaurant = 0;
+     Hotel = 1;
+     HomeStay = 2;
+     Resort = 3;
+}
+
+message GrpcPlace {
+  string id = 1;
+  string name = 2;
+  PlaceType type = 3;
+  string cityId = 4;
+  double latitude = 5;
+  double longitude = 6;
+  double rating = 7;
+  int32 reviewCount = 8;
+  bool isOpen = 9;
+  string location = 10;
+  bool isDeleted = 13;
+}
+
+message GetPlacesByIdsResult {
+  repeated GrpcPlace places = 1;
+}
+
+message GetPlacesByIdsRequest {
+  repeated string ids = 1;
+}

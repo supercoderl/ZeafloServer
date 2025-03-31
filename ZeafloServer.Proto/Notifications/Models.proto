@@ -1,0 +1,28 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "ZeafloServer.Proto.Notifications";
+import "google/protobuf/timestamp.proto";
+
+enum NotificationType {
+     Like = 0;
+     Comment = 1;
+     FriendRequest = 2;
+     Message = 3;
+}
+
+message GrpcNotification {
+  string id = 1;
+  string userId = 2;
+  NotificationType type = 3;
+  string referenceId = 4;
+  bool isRead = 5;
+  bool isDeleted = 13;
+}
+
+message GetNotificationsByIdsResult {
+  repeated GrpcNotification notifications = 1;
+}
+
+message GetNotificationsByIdsRequest {
+  repeated string ids = 1;
+}

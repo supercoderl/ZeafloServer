@@ -1,0 +1,18 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "ZeafloServer.Proto.SavePosts";
+
+message GrpcSavePost {
+  string id = 1;
+  string userId = 2;
+  string postId = 3;
+  bool isDeleted = 4;
+}
+
+message GetSavePostsByIdsResult {
+  repeated GrpcSavePost savePosts = 1;
+}
+
+message GetSavePostsByIdsRequest {
+  repeated string ids = 1;
+}

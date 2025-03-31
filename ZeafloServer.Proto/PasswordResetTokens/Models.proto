@@ -1,0 +1,22 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "ZeafloServer.Proto.PasswordResetTokens";
+import "google/protobuf/timestamp.proto";
+
+message GrpcPasswordResetToken {
+  string id = 1;
+  string userId = 2;
+  string code = 3;
+  google.protobuf.Timestamp expiresAt = 4;
+  int32 attempCount = 5;
+  bool isUsed = 6;
+  bool isDeleted = 13;
+}
+
+message GetPasswordResetTokensByIdsResult {
+  repeated GrpcPasswordResetToken passwordResetTokens = 1;
+}
+
+message GetPasswordResetTokensByIdsRequest {
+  repeated string ids = 1;
+}

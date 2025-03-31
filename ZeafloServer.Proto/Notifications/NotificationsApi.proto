@@ -1,0 +1,9 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "ZeafloServer.Proto.Notifications";
+
+import "Notifications/Models.proto";
+
+service NotificationsApi {
+  rpc GetByIds(GetNotificationsByIdsRequest) returns (GetNotificationsByIdsResult);
+}

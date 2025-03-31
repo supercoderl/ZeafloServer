@@ -1,0 +1,18 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "ZeafloServer.Proto.PlaceLikes";
+
+message GrpcPlaceLike {
+  string id = 1;
+  string placeId = 2;
+  string userId = 3;
+  bool isDeleted = 13;
+}
+
+message GetPlaceLikesByIdsResult {
+  repeated GrpcPlaceLike placeLikes = 1;
+}
+
+message GetPlaceLikesByIdsRequest {
+  repeated string ids = 1;
+}

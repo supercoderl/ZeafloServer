@@ -1,0 +1,9 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "ZeafloServer.Proto.UserLevels";
+
+import "UserLevels/Models.proto";
+
+service UserLevelsApi {
+  rpc GetByIds(GetUserLevelsByIdsRequest) returns (GetUserLevelsByIdsResult);
+}

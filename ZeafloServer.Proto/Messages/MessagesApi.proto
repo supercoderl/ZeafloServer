@@ -1,0 +1,9 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "ZeafloServer.Proto.Messages";
+
+import "Messages/Models.proto";
+
+service MessagesApi {
+  rpc GetByIds(GetMessagesByIdsRequest) returns (GetMessagesByIdsResult);
+}

@@ -1,0 +1,9 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "ZeafloServer.Proto.Tokens";
+
+import "Tokens/Models.proto";
+
+service TokensApi {
+  rpc GetByIds(GetTokensByIdsRequest) returns (GetTokensByIdsResult);
+}

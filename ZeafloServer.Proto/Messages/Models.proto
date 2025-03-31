@@ -1,0 +1,21 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "ZeafloServer.Proto.Messages";
+
+message GrpcMessage {
+  string id = 1;
+  string senderId = 2;
+  string receiverId = 3;
+  string content = 4;
+  string mediaUrl = 5;
+  bool isRead = 6;
+  bool isDeleted = 13;
+}
+
+message GetMessagesByIdsResult {
+  repeated GrpcMessage messages = 1;
+}
+
+message GetMessagesByIdsRequest {
+  repeated string ids = 1;
+}

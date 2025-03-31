@@ -1,0 +1,9 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "ZeafloServer.Proto.SavePosts";
+
+import "SavePosts/Models.proto";
+
+service SavePostsApi {
+  rpc GetByIds(GetSavePostsByIdsRequest) returns (GetSavePostsByIdsResult);
+}

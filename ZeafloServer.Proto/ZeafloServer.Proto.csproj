@@ -1,0 +1,70 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Cities\Models.proto" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Google.Protobuf" Version="3.30.1" />
+    <PackageReference Include="Google.Protobuf.Tools" Version="3.30.1" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.70.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="Comments\Models.proto" GrpcServices="Both" />
+    <Protobuf Include="Comments\CommentsApi.proto" GrpcServices="Both" />
+    <Protobuf Include="FriendShips\Models.proto" GrpcServices="Both" />
+    <Protobuf Include="FriendShips\FriendShipsApi.proto" GrpcServices="Both" />
+    <Protobuf Include="Likes\Models.proto" GrpcServices="Both" />
+    <Protobuf Include="Likes\LikesApi.proto" GrpcServices="Both" />
+    <Protobuf Include="MapThemes\Models.proto" GrpcServices="Both" />
+    <Protobuf Include="MapThemes\MapThemesApi.proto" GrpcServices="Both" />
+    <Protobuf Include="MemberShipLevels\Models.proto" GrpcServices="Both" />
+    <Protobuf Include="MemberShipLevels\MemberShipLevelsApi.proto" GrpcServices="Both" />
+    <Protobuf Include="Messages\Models.proto" GrpcServices="Both" />
+    <Protobuf Include="Messages\MessagesApi.proto" GrpcServices="Both" />
+    <Protobuf Include="Notifications\Models.proto" GrpcServices="Both" />
+    <Protobuf Include="Notifications\NotificationsApi.proto" GrpcServices="Both" />
+    <Protobuf Include="PasswordResetTokens\Models.proto" GrpcServices="Both" />
+    <Protobuf Include="PasswordResetTokens\PasswordResetTokensApi.proto" GrpcServices="Both" />
+    <Protobuf Include="Places\Models.proto" GrpcServices="Both" />
+    <Protobuf Include="Places\PlacesApi.proto" GrpcServices="Both" />
+    <Protobuf Include="PlaceImages\Models.proto" GrpcServices="Both" />
+    <Protobuf Include="PlaceImages\PlaceImagesApi.proto" GrpcServices="Both" />
+    <Protobuf Include="PlaceLikes\Models.proto" GrpcServices="Both" />
+    <Protobuf Include="PlaceLikes\PlaceLikesApi.proto" GrpcServices="Both" />
+    <Protobuf Include="Posts\Models.proto" GrpcServices="Both" />
+    <Protobuf Include="Posts\PostsApi.proto" GrpcServices="Both" />
+    <Protobuf Include="Reports\Models.proto" GrpcServices="Both" />
+    <Protobuf Include="Reports\ReportsApi.proto" GrpcServices="Both" />
+    <Protobuf Include="SavePosts\Models.proto" GrpcServices="Both" />
+    <Protobuf Include="SavePosts\SavePostsApi.proto" GrpcServices="Both" />
+    <Protobuf Include="StoryActivities\Models.proto" GrpcServices="Both" />
+    <Protobuf Include="StoryActivities\StoryActivitiesApi.proto" GrpcServices="Both" />
+    <Protobuf Include="Tokens\Models.proto" GrpcServices="Both" />
+    <Protobuf Include="Tokens\TokensApi.proto" GrpcServices="Both" />
+    <Protobuf Include="UserLevels\Models.proto" GrpcServices="Both" />
+    <Protobuf Include="UserLevels\UserLevelsApi.proto" GrpcServices="Both" />
+    <Protobuf Include="Cities\Models.proto">
+      <GrpcServices>Both</GrpcServices>
+    </Protobuf>
+    <Protobuf Include="Cities\CitiesApi.proto">
+      <GrpcServices>Both</GrpcServices>
+    </Protobuf>
+    <Protobuf Include="UserStatuses\Models.proto" GrpcServices="Both" />
+    <Protobuf Include="UserStatuses\UserStatusesApi.proto" GrpcServices="Both" />
+    <Protobuf Include="Users\UsersApi.proto">
+      <GrpcServices>Both</GrpcServices>
+    </Protobuf>
+    <Protobuf Include="Users\Models.proto">
+      <GrpcServices>Both</GrpcServices>
+    </Protobuf>
+  </ItemGroup>
+
+</Project>
