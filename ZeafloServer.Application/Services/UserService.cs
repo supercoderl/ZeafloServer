@@ -15,6 +15,7 @@ using ZeafloServer.Domain.Commands.Users.ChangePassword;
 using ZeafloServer.Domain.Commands.Users.Login;
 using ZeafloServer.Domain.Commands.Users.RefreshToken;
 using ZeafloServer.Domain.Commands.Users.Register;
+using ZeafloServer.Domain.Commands.Users.RetrieveQr;
 using ZeafloServer.Domain.Commands.Users.UpdateUser;
 using ZeafloServer.Domain.Enums;
 using ZeafloServer.Domain.Interfaces;
@@ -98,7 +99,11 @@ namespace ZeafloServer.Application.Services
 
             if (user == null) return null;
 
-            return UserViewModel.FromUser(user);
+            return UserViewModel.FromUser(
+                user,
+                user.Friends.Count() + user.FriendShips.Count(),
+                new UserLevelInfo(user.UserLevel)
+            );
         }
 
         public async Task<bool> ChangePasswordAsync(ChangePasswordRequest request)
@@ -118,6 +123,11 @@ namespace ZeafloServer.Application.Services
         public async Task<object?> RefreshTokenAsync(RefreshTokenRequest request)
         {
             return await _bus.SendCommandAsync(new RefreshTokenCommand(request.RefreshToken));
+        }
+
+        public async Task<string> RetrieveQrAsync(Guid userId)
+        {
+            return await _bus.SendCommandAsync(new RetrieveQrCommand(userId));
         }
     }
 }

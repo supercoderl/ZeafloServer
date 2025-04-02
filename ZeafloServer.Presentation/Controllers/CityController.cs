@@ -54,5 +54,20 @@ namespace ZeafloServer.Presentation.Controllers
         {
             return Response(await _cityService.GetAllCitiesAsync(query, status, searchTerm, sortQuery));
         }
+
+        /// <summary>
+        /// Creates a city entry and returns its unique identifier.
+        /// </summary>
+        /// <param name="request">The request payload containing city details.</param>
+        /// <returns>Returns the UID of the created city or an error message if the request is invalid.</returns>
+        [HttpPost]
+        [AllowAnonymous]
+        [SwaggerOperation(Summary = "Create city", Description = "Create a new city and returns UID.")]
+        [SwaggerResponse(200, "Request successful", typeof(ResponseMessage<Guid>))]
+        [SwaggerResponse(400, "Invalid request")]
+        public async Task<IActionResult> CreateCityAsync([FromBody] CreateCityRequest request)
+        {
+            return Response(await _cityService.CreateCityAsync(request));
+        }
     }
 }

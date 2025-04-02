@@ -28,7 +28,7 @@ namespace ZeafloServer.Application.Queries.Users.GetById
 
         public async Task<UserViewModel?> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.GetByIdAsync(request.userId);
+            var user = await _userRepository.GetByIdAsync(request.userId, u => u.Friends, u => u.FriendShips, u => u.UserLevel); //Missing ThenInclude
 
             if (user == null)
             {
@@ -41,7 +41,11 @@ namespace ZeafloServer.Application.Queries.Users.GetById
                 return null;
             }
 
-            return UserViewModel.FromUser( user );
+            return UserViewModel.FromUser( 
+                user,
+                user.Friends.Count() + user.FriendShips.Count(),
+                new UserLevelInfo(user.UserLevel)
+            );
         }
     }
 }

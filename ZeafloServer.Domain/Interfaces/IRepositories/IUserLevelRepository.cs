@@ -9,5 +9,6 @@ namespace ZeafloServer.Domain.Interfaces.IRepositories
 {
     public interface IUserLevelRepository : IRepository<UserLevel, Guid>
     {
+        Task<UserLevel?> GetByUserAsync(Guid userId);
     }
 }

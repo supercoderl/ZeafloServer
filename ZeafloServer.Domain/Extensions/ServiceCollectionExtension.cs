@@ -7,16 +7,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZeafloServer.Domain.Commands.Cities.CreateCity;
 using ZeafloServer.Domain.Commands.Files.DeleteFile;
 using ZeafloServer.Domain.Commands.Files.UploadFile;
 using ZeafloServer.Domain.Commands.FriendShips.AcceptRequest;
 using ZeafloServer.Domain.Commands.FriendShips.AddFriend;
 using ZeafloServer.Domain.Commands.FriendShips.CancelRequest;
 using ZeafloServer.Domain.Commands.MapThemes.CreateMapTheme;
+using ZeafloServer.Domain.Commands.MemberShipLevels.CreateMemberShipLevel;
 using ZeafloServer.Domain.Commands.Messages.CreateMessage;
 using ZeafloServer.Domain.Commands.Messages.UpdateUnreadMessage;
+using ZeafloServer.Domain.Commands.Places.CreatePlace;
 using ZeafloServer.Domain.Commands.PostMedias.CreatePostMedia;
 using ZeafloServer.Domain.Commands.Posts.CreatePost;
+using ZeafloServer.Domain.Commands.Posts.ReactPost;
+using ZeafloServer.Domain.Commands.Posts.SavePost;
+using ZeafloServer.Domain.Commands.Processes.CreateProcess;
+using ZeafloServer.Domain.Commands.Processes.UpdateProcess;
 using ZeafloServer.Domain.Commands.Tokens.CreateToken;
 using ZeafloServer.Domain.Commands.Tokens.UpdateToken;
 using ZeafloServer.Domain.Commands.Users.ChangePassword;
@@ -25,6 +32,7 @@ using ZeafloServer.Domain.Commands.Users.Login;
 using ZeafloServer.Domain.Commands.Users.RefreshToken;
 using ZeafloServer.Domain.Commands.Users.Register;
 using ZeafloServer.Domain.Commands.Users.ResetPassword;
+using ZeafloServer.Domain.Commands.Users.RetrieveQr;
 using ZeafloServer.Domain.Commands.Users.UpdateUser;
 using ZeafloServer.Domain.Entities;
 using ZeafloServer.Domain.EventHandler.Fanout;
@@ -45,6 +53,7 @@ namespace ZeafloServer.Domain.Extensions
             services.AddScoped<IRequestHandler<UpdateUserCommand, User?>,  UpdateUserCommandHandler>();
             services.AddScoped<IRequestHandler<ChangePasswordCommand, bool>, ChangePasswordCommandHandler>();
             services.AddScoped<IRequestHandler<RefreshTokenCommand, object?>, RefreshTokenCommandHandler>();
+            services.AddScoped<IRequestHandler<RetrieveQrCommand, string>, RetrieveQrCommandHandler>();
 
             //Token
             services.AddScoped<IRequestHandler<CreateTokenCommand, Guid>, CreateTokenCommandHandler>();
@@ -72,6 +81,25 @@ namespace ZeafloServer.Domain.Extensions
             services.AddScoped<IRequestHandler<CreateMessageCommand, Message?>, CreateMessageCommandHandler>();
             services.AddScoped<IRequestHandler<UpdateUnreadMessageCommand, bool>, UpdateUnreadMessageCommandHandler>();
 
+            //Post Reaction
+            services.AddScoped<IRequestHandler<ReactPostCommand, Guid>, ReactPostCommandHandler>();
+
+            //Save Post
+            services.AddScoped<IRequestHandler<SavePostCommand, Guid>, SavePostCommandHandler>();
+
+            //Membership Level
+            services.AddScoped<IRequestHandler<CreateMemberShipLevelCommand, Guid>, CreateMemberShipLevelCommandHandler>();
+
+            //Process
+            services.AddScoped<IRequestHandler<CreateProcessCommand, Processing?>, CreateProcessCommandHandler>();
+            services.AddScoped<IRequestHandler<UpdateProcessCommand, Processing?>, UpdateProcessCommandHandler>();
+
+            //Place
+            services.AddScoped<IRequestHandler<CreatePlaceCommand, Guid>, CreatePlaceCommandHandler>();
+
+            //City
+            services.AddScoped<IRequestHandler<CreateCityCommand, Guid>, CreateCityCommandHandler>();
+
             return services;
         }
         public static IServiceCollection AddNotificationHandlers(this IServiceCollection services)
@@ -95,6 +123,7 @@ namespace ZeafloServer.Domain.Extensions
             services.AddSingleton<TokenHelpers>();
             services.AddSingleton<QRCodeHelpers>();
             services.AddSingleton<UploadHelpers>();
+            services.AddSingleton<ProcessingHelpers>();
 
             return services;
         }

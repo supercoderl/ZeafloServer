@@ -93,5 +93,35 @@ namespace ZeafloServer.Domain.Errors
             public const string EmptySenderId = "MESSAGE_EMPTY_SENDER_ID";
             public const string EmptyReceiverId = "MESSAGE_EMPTY_RECEIVER_ID";
         }
+
+        public static class SavePost
+        {
+            //Save Post Validation
+            public const string EmptyUserId = "SAVE_POST_EMPTY_USER_ID";
+            public const string EmptyPostId = "SAVE_POST_EMPTY_POST_ID";
+        }
+
+        public static class Process
+        {
+            //Process Validation
+            public const string EmptyProcessingId = "PROCESS_EMPTY_PROCESSING_ID";
+            public const string EmptyUserId = "PROCESS_EMPTY_USER_ID";
+            public const string EmptyType = "PROCESS_EMPTY_TYPE";
+        }
+
+        public static class Place
+        {
+            //Place Validation
+            public const string EmptyPlaceId = "PLACE_EMPTY_PLACE_ID";
+            public const string EmptyName = "PLACE_EMPTY_NAME";
+        }
+
+        public static class City
+        {
+            //City Validation
+            public const string EmptyCityId = "CITY_EMPTY_CITY_ID";
+            public const string EmptyName = "CITY_EMPTY_NAME";
+            public const string EmptyPostalCode = "CITY_EMPTY_POSTAL_CODE";
+        }
     }
 }

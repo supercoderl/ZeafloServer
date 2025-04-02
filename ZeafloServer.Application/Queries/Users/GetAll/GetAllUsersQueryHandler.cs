@@ -54,9 +54,15 @@ namespace ZeafloServer.Application.Queries.Users.GetAll
 
             query = query
                 .Skip((request.Query.PageIndex - 1) * request.Query.PageSize)
-                .Take(request.Query.PageSize);
+                .Take(request.Query.PageSize)
+                .Include(u => u.UserLevel)
+                    .ThenInclude(ul => ul.MemberShipLevel);
 
-            var users = await query.Select(user => UserViewModel.FromUser(user)).ToListAsync();
+            var users = await query.Select(user => UserViewModel.FromUser(
+                user,
+                user.Friends.Count() + user.FriendShips.Count(),
+                new UserLevelInfo(user.UserLevel)
+            )).ToListAsync();
 
             return new PageResult<UserViewModel>(
                 totalCount,

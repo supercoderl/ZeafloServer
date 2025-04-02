@@ -20,6 +20,7 @@ using ZeafloServer.Application.Queries.Places.GetAll;
 using ZeafloServer.Application.Queries.Posts.GetAll;
 using ZeafloServer.Application.Queries.Users.GetAll;
 using ZeafloServer.Application.Queries.Users.GetById;
+using ZeafloServer.Application.Queries.Users.GetLevel;
 using ZeafloServer.Application.Services;
 using ZeafloServer.Application.SortProviders;
 using ZeafloServer.Application.ViewModels;
@@ -34,6 +35,7 @@ using ZeafloServer.Application.ViewModels.Notifications;
 using ZeafloServer.Application.ViewModels.Places;
 using ZeafloServer.Application.ViewModels.Posts;
 using ZeafloServer.Application.ViewModels.Sorting;
+using ZeafloServer.Application.ViewModels.UserLevels;
 using ZeafloServer.Application.ViewModels.Users;
 using ZeafloServer.Domain.Entities;
 
@@ -56,6 +58,7 @@ namespace ZeafloServer.Application.Extensions
             services.AddScoped<IPlaceService, PlaceService>();
             services.AddScoped<IPostService, PostService>();
             services.AddScoped<IPostMediaService, PostMediaService>();
+            services.AddScoped<IUserLevelService, UserLevelService>();
 
             return services;
         }
@@ -97,6 +100,9 @@ namespace ZeafloServer.Application.Extensions
             services.AddScoped<IRequestHandler<GetAllUsersQuery, PageResult<UserViewModel>>, GetAllUsersQueryHandler>();
             services.AddScoped<IRequestHandler<GetUserByIdQuery, UserViewModel?>, GetUserByIdQueryHandler>();
             services.AddScoped<IRequestHandler<GetContactsQuery, PageResult<ContactInfo>>, GetContactsQueryHandler>();
+
+            // UserLevel
+            services.AddScoped<IRequestHandler<GetUserLevelQuery, UserLevelViewModel?>, GetUserLevelQueryHandler>();
 
             return services;
         }

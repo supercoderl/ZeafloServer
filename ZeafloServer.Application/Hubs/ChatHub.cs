@@ -157,8 +157,13 @@ namespace ZeafloServer.Application.Hubs
                     Guid.Parse(friendId)
                 ));
 
-                await SendUserMessage("AddFriend", userId, $"Add friend successfully", null);
-                await SendUserMessage("AddFriend", friendId, $" You have a new add friend request", null);
+                await SendUserMessage("AddFriend", userId, $"Add friend successfully", new {
+                    UserId = userId
+                });
+                await SendUserMessage("AddFriend", friendId, $"You have a new add friend request", new
+                {
+                    FriendId = friendId
+                });
             }
             catch (Exception ex)
             {

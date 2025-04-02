@@ -26,6 +26,7 @@
     <Folder Include="Queries\Notifications\GetById\" />
     <Folder Include="Queries\Places\GetById\" />
     <Folder Include="Queries\Posts\GetById\" />
+    <Folder Include="ViewModels\PostReactions\" />
   </ItemGroup>
 
 </Project>

@@ -20,7 +20,7 @@ namespace ZeafloServer.Application.ViewModels.Places
         public int ReviewCount { get; set; }
         public bool IsOpen { get; set; }
         public DateTime CreatedAt { get; set; }
-        public DateTime UpdatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
 
         public static PlaceViewModel FromPlace(Place place)
         {

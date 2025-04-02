@@ -50,7 +50,9 @@ namespace ZeafloServer.Application.Queries.Posts.GetAll
 
             query = query
                 .Skip((request.Query.PageIndex - 1) * request.Query.PageSize)
-                .Take(request.Query.PageSize);
+                .Take(request.Query.PageSize)
+                .Include(post => post.PostReactions)
+                    .ThenInclude(u => u.User);
 
             var posts = await query
                 .Select(post => PostViewModel.FromPost(

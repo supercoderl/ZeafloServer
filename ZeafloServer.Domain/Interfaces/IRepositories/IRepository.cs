@@ -24,7 +24,7 @@ namespace ZeafloServer.Domain.Interfaces.IRepositories
         /// </summary>
         IQueryable<TEntity> GetAll();
         IQueryable<TEntity> GetAllNoTracking();
-        Task<TEntity?> GetByIdAsync(TId id);
+        Task<TEntity?> GetByIdAsync(TId id, params Expression<Func<TEntity, object>>[] includes);
 
         /// <summary>
         /// Method Count

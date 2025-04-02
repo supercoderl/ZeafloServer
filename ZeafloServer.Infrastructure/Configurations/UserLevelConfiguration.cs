@@ -32,8 +32,8 @@ namespace ZeafloServer.Infrastructure.Configurations
                 .HasColumnType("timestamp");
 
             builder.HasOne(u => u.User)
-                .WithMany(ul => ul.UserLevels)
-                .HasForeignKey(u => u.UserId)
+                .WithOne(ul => ul.UserLevel)
+                .HasForeignKey<UserLevel>(u => u.UserId)
                 .HasConstraintName("FK_UserLevel_User_UserId")
                 .OnDelete(DeleteBehavior.Cascade);
 

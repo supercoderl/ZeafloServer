@@ -41,7 +41,7 @@ namespace ZeafloServer.Domain.Entities
         public DateTime CreatedAt { get; private set; }
 
         [Column("updated_at")]
-        public DateTime UpdatedAt { get; private set; }
+        public DateTime? UpdatedAt { get; private set; }
 
         [ForeignKey("CityId")]
         [InverseProperty("Places")]
@@ -64,7 +64,7 @@ namespace ZeafloServer.Domain.Entities
             int reviewCount,
             bool isOpen,
             DateTime createdAt,
-            DateTime updatedAt
+            DateTime? updatedAt
         ) : base( placeId )
         {
             PlaceId = placeId;
@@ -89,6 +89,6 @@ namespace ZeafloServer.Domain.Entities
         public void SetReviewCount( int reviewCount ) { ReviewCount = reviewCount; }
         public void SetIsOpen( bool isOpen ) { IsOpen = isOpen; }
         public void SetCreatedAt( DateTime created_at ) { CreatedAt = created_at; }
-        public void SetUpdatedAt( DateTime updated_at ) { UpdatedAt = updated_at; }
+        public void SetUpdatedAt( DateTime? updated_at ) { UpdatedAt = updated_at; }
     }
 }

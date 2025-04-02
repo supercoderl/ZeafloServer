@@ -13,6 +13,8 @@ using ZeafloServer.Domain.Notifications;
 using ZeafloServer.Presentation.Models;
 using ZeafloServer.Presentation.Swagger;
 using ZeafloServer.Application.ViewModels.MemberShipLevels;
+using ZeafloServer.Application.Services;
+using ZeafloServer.Application.ViewModels.Posts;
 
 namespace ZeafloServer.Presentation.Controllers
 {
@@ -54,6 +56,21 @@ namespace ZeafloServer.Presentation.Controllers
         )
         {
             return Response(await _memberShipLevelService.GetAllMemberShipLevelsAsync(query, status, searchTerm, sortQuery));
+        }
+
+        /// <summary>
+        /// Creates a membership level entry and returns its unique identifier.
+        /// </summary>
+        /// <param name="request">The request payload containing membership level details.</param>
+        /// <returns>Returns the UID of the created membership level or an error message if the request is invalid.</returns>
+        [HttpPost]
+        [AllowAnonymous]
+        [SwaggerOperation(Summary = "Create membership level", Description = "Create a membership level and returns UID.")]
+        [SwaggerResponse(200, "Request successful", typeof(ResponseMessage<Guid>))]
+        [SwaggerResponse(400, "Invalid request")]
+        public async Task<IActionResult> CreateMemberShipLevelAsync([FromBody] CreateMemberShipLevelRequest request)
+        {
+            return Response(await _memberShipLevelService.CreateMemberShipLevelAsync(request));
         }
     }
 }

@@ -26,5 +26,10 @@ namespace ZeafloServer.Infrastructure.Repositories
         {
             return await DbSet.Where(u => phoneNumbers.Contains(u.PhoneNumber)).ToListAsync();
         }
+
+        public async Task<string?> GetQrCodeUrlAsync(Guid userId)
+        {
+            return await DbSet.Where(u => u.UserId == userId).Select(u => u.QrUrl).SingleOrDefaultAsync();
+        }
     }
 }

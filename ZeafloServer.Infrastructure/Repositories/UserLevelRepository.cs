@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,11 @@ namespace ZeafloServer.Infrastructure.Repositories
         public UserLevelRepository(ApplicationDbContext context) : base(context)
         {
             
+        }
+
+        public async Task<UserLevel?> GetByUserAsync(Guid userId)
+        {
+            return await DbSet.Where(x => x.UserId == userId).Include(x => x.MemberShipLevel).SingleOrDefaultAsync();
         }
     }
 }

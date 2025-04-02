@@ -27,4 +27,12 @@ namespace ZeafloServer.Domain.Enums
         Deleted,
         NotDeleted,
     }
+
+    public enum ProcessStatus
+    {
+        Pending, 
+        InProgress, 
+        Completed, 
+        Failed
+    }
 }

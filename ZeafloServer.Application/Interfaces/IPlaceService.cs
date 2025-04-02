@@ -18,5 +18,6 @@ namespace ZeafloServer.Application.Interfaces
             string searchTerm = "",
             SortQuery? sortQuery = null
         );
+        public Task<Guid> CreatePlaceAsync(CreatePlaceRequest request);
     }
 }

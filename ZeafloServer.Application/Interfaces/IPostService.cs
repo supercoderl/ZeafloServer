@@ -19,5 +19,7 @@ namespace ZeafloServer.Application.Interfaces
             SortQuery? sortQuery = null
         );
         public Task<Guid> CreatePostAsync(CreatePostRequest request);
+        public Task<Guid> ReactPostAsync(ReactPostRequest request);
+        public Task<Guid> SavePostAsync(SavePostRequest request);
     }
 }

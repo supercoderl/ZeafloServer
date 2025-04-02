@@ -72,5 +72,37 @@ namespace ZeafloServer.Presentation.Controllers
         {
             return Response(await _postService.CreatePostAsync(request));
         }
+
+        /// <summary>
+        /// Reacts a post entry and returns its unique identifier.
+        /// </summary>
+        /// <param name="request">The request payload containing post details.</param>
+        /// <returns>Returns the UID of the reacted post or an error message if the request is invalid.</returns>
+        [Route("react")]
+        [HttpPost]
+        [AllowAnonymous]
+        [SwaggerOperation(Summary = "React post", Description = "React a post and returns UID.")]
+        [SwaggerResponse(200, "Request successful", typeof(ResponseMessage<Guid>))]
+        [SwaggerResponse(400, "Invalid request")]
+        public async Task<IActionResult> ReactPostAsync([FromBody] ReactPostRequest request)
+        {
+            return Response(await _postService.ReactPostAsync(request));
+        }
+
+        /// <summary>
+        /// Saves a post entry and returns its unique identifier.
+        /// </summary>
+        /// <param name="request">The request payload containing post details.</param>
+        /// <returns>Returns the UID of the saved post or an error message if the request is invalid.</returns>
+        [Route("save")]
+        [HttpPost]
+        [AllowAnonymous]
+        [SwaggerOperation(Summary = "Save post", Description = "Save a post and returns UID.")]
+        [SwaggerResponse(200, "Request successful", typeof(ResponseMessage<Guid>))]
+        [SwaggerResponse(400, "Invalid request")]
+        public async Task<IActionResult> SavePostAsync([FromBody] SavePostRequest request)
+        {
+            return Response(await _postService.SavePostAsync(request));
+        }
     }
 }

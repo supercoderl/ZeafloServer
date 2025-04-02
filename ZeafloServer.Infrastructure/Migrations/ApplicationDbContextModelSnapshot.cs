@@ -18,9 +18,6 @@ namespace ZeafloServer.Infrastructure.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "9.0.3")
-                .HasAnnotation("Proxies:ChangeTracking", false)
-                .HasAnnotation("Proxies:CheckEquality", false)
-                .HasAnnotation("Proxies:LazyLoading", true)
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -644,6 +641,48 @@ namespace ZeafloServer.Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("ZeafloServer.Domain.Entities.Processing", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("ProcessingId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("processing_id");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer")
+                        .HasColumnName("status");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("type");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
+
+                    b.ToTable("Processing");
+                });
+
             modelBuilder.Entity("ZeafloServer.Domain.Entities.Report", b =>
                 {
                     b.Property<Guid>("ReportId")
@@ -944,7 +983,8 @@ namespace ZeafloServer.Infrastructure.Migrations
 
                     b.HasIndex("MemberShipLevelId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("UserLevels");
                 });
@@ -1179,6 +1219,17 @@ namespace ZeafloServer.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("ZeafloServer.Domain.Entities.Processing", b =>
+                {
+                    b.HasOne("ZeafloServer.Domain.Entities.User", "User")
+                        .WithOne("Processing")
+                        .HasForeignKey("ZeafloServer.Domain.Entities.Processing", "UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("ZeafloServer.Domain.Entities.Report", b =>
                 {
                     b.HasOne("ZeafloServer.Domain.Entities.Post", "Post")
@@ -1255,8 +1306,8 @@ namespace ZeafloServer.Infrastructure.Migrations
                         .HasConstraintName("FK_UserLevel_MemberShipLevel_MemberShipLevelId");
 
                     b.HasOne("ZeafloServer.Domain.Entities.User", "User")
-                        .WithMany("UserLevels")
-                        .HasForeignKey("UserId")
+                        .WithOne("UserLevel")
+                        .HasForeignKey("ZeafloServer.Domain.Entities.UserLevel", "UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("FK_UserLevel_User_UserId");
@@ -1330,6 +1381,8 @@ namespace ZeafloServer.Infrastructure.Migrations
 
                     b.Navigation("Posts");
 
+                    b.Navigation("Processing");
+
                     b.Navigation("ReceiverMessages");
 
                     b.Navigation("Reports");
@@ -1342,7 +1395,7 @@ namespace ZeafloServer.Infrastructure.Migrations
 
                     b.Navigation("Tokens");
 
-                    b.Navigation("UserLevels");
+                    b.Navigation("UserLevel");
 
                     b.Navigation("UserStatuses");
                 });

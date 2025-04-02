@@ -11,5 +11,6 @@ namespace ZeafloServer.Domain.Interfaces.IRepositories
     {
         Task<User?> GetByIdentifierAsync(string identifier);
         Task<IEnumerable<User?>> GetListByPhoneNumber(List<string> phoneNumbers);
+        Task<string?> GetQrCodeUrlAsync(Guid userId);
     }
 }

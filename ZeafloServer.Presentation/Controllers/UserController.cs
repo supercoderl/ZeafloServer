@@ -152,5 +152,19 @@ namespace ZeafloServer.Presentation.Controllers
         {
             return Response(await _userService.RefreshTokenAsync(request));
         }
+
+        /// <summary>
+        /// Retrieve QR
+        /// </summary>
+        /// <returns>Returns qr url or error message</returns>
+        [Route("retrieve")]
+        [HttpGet]
+        [SwaggerOperation(Summary = "Retrieve QR", Description = "Retrieve QR and returns QR url.")]
+        [SwaggerResponse(200, "Request successful", typeof(ResponseMessage<string>))]
+        [SwaggerResponse(400, "Invalid request")]
+        public async Task<IActionResult> RetrieveQRAsync()
+        {
+            return Response(await _userService.RetrieveQrAsync(_user.GetUserId()));
+        }
     }
 }

@@ -70,6 +70,8 @@ namespace ZeafloServer.Infrastructure.Extensions
             services.AddScoped<IUserLevelRepository, UserLevelRepository>();
             services.AddScoped<IUserStatusRepository, UserStatusRepository>();
             services.AddScoped<IPostMediaRepository, PostMediaRepository>();
+            services.AddScoped<IPostReactionRepository, PostReactionRepository>();
+            services.AddScoped<IProcessingRepository, ProcessingRepository>();
 
             return services;
         }

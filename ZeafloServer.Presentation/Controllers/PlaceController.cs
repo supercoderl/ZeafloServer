@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using ZeafloServer.Application.Interfaces;
@@ -54,6 +53,21 @@ namespace ZeafloServer.Presentation.Controllers
         )
         {
             return Response(await _placeService.GetAllPlacesAsync(query, status, searchTerm, sortQuery));
+        }
+
+        /// <summary>
+        /// Creates a place entry and returns its unique identifier.
+        /// </summary>
+        /// <param name="request">The request payload containing place details.</param>
+        /// <returns>Returns the UID of the saved place or an error message if the request is invalid.</returns>
+        [HttpPost]
+        [AllowAnonymous]
+        [SwaggerOperation(Summary = "Create place", Description = "Create a place and returns UID.")]
+        [SwaggerResponse(200, "Request successful", typeof(ResponseMessage<Guid>))]
+        [SwaggerResponse(400, "Invalid request")]
+        public async Task<IActionResult> CreatePlaceAsync([FromBody] CreatePlaceRequest request)
+        {
+            return Response(await _placeService.CreatePlaceAsync(request));
         }
     }
 }

@@ -26,7 +26,7 @@ namespace ZeafloServer.Domain.Entities
         public DateTime AssignedAt { get; private set; }
 
         [ForeignKey("UserId")]
-        [InverseProperty("UserLevels")]
+        [InverseProperty("UserLevel")]
         public virtual User? User { get; set; }
 
         [ForeignKey("MemberShipLevelId")]

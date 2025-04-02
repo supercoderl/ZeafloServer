@@ -18,6 +18,7 @@ namespace ZeafloServer.Application.ViewModels.Posts
         public Visibility Visibility { get; set; }
         public DateTime CreatedAt { get; set; }
         public Author Author { get; set; } = new Author(string.Empty, string.Empty, string.Empty);
+        public List<UserReactions> UserReactions { get; set; } = new List<UserReactions>();
 
         public static PostViewModel FromPost(Post post, Author author)
         {
@@ -30,7 +31,11 @@ namespace ZeafloServer.Application.ViewModels.Posts
                 ThumbnailUrl = post.ThumbnailUrl,
                 Visibility = post.Visibility,
                 CreatedAt = post.CreatedAt,
-                Author = author
+                Author = author,
+                UserReactions = post.PostReactions.Select(reaction => new UserReactions(
+                    reaction.User?.UserId ?? Guid.Empty, 
+                    reaction.ReactionType
+                )).ToList()
             };
         }
     }
@@ -50,6 +55,18 @@ namespace ZeafloServer.Application.ViewModels.Posts
             Fullname = fullname;
             Location = location;
             AvatarUrl = avatarUrl;
+        }
+    }
+
+    public class UserReactions
+    {
+        public Guid UserId { get; set; }    
+        public ReactionType ReactionType { get; set; }
+
+        public UserReactions(Guid userId, ReactionType reactionType)
+        {
+            UserId = userId;
+            ReactionType = reactionType;
         }
     }
 }

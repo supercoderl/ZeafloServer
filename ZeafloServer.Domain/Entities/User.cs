@@ -107,7 +107,7 @@ namespace ZeafloServer.Domain.Entities
         public virtual ICollection<UserStatus> UserStatuses { get; set; } = new List<UserStatus>();
 
         [InverseProperty("User")]
-        public virtual ICollection<UserLevel> UserLevels { get; set; } = new List<UserLevel>();
+        public virtual UserLevel? UserLevel { get; set; }
 
         [InverseProperty("User")]
         public virtual ICollection<Report> Reports { get; set; } = new List<Report>();
@@ -117,6 +117,9 @@ namespace ZeafloServer.Domain.Entities
 
         [InverseProperty("User")]
         public virtual ICollection<PostReaction> PostReactions { get; set; } = new List<PostReaction>();
+
+        [InverseProperty("User")]
+        public virtual Processing? Processing { get; set; }
 
         public User(
             Guid userId,
