@@ -380,12 +380,58 @@ namespace ZeafloServer.Infrastructure.Migrations
                     b.ToTable("PasswordResetTokens");
                 });
 
+            modelBuilder.Entity("ZeafloServer.Domain.Entities.PhotoPost", b =>
+                {
+                    b.Property<Guid>("PhotoPostId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("photo_post_id");
+
+                    b.Property<string>("AnnotationType")
+                        .HasColumnType("text")
+                        .HasColumnName("annotation_type");
+
+                    b.Property<string>("AnnotationValue")
+                        .HasColumnType("text")
+                        .HasColumnName("annotation_value");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("image_url");
+
+                    b.Property<DateTime>("SentAt")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("sent_at");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("PhotoPostId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PhotoPosts");
+                });
+
             modelBuilder.Entity("ZeafloServer.Domain.Entities.Place", b =>
                 {
                     b.Property<Guid>("PlaceId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("place_id");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("address");
 
                     b.Property<Guid>("CityId")
                         .HasColumnType("uuid")
@@ -431,7 +477,7 @@ namespace ZeafloServer.Infrastructure.Migrations
                         .HasColumnType("text")
                         .HasColumnName("type");
 
-                    b.Property<DateTime>("UpdatedAt")
+                    b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp")
                         .HasColumnName("updated_at");
 
@@ -441,7 +487,7 @@ namespace ZeafloServer.Infrastructure.Migrations
 
                     b.ToTable("Places", t =>
                         {
-                            t.HasCheckConstraint("CK_Place_Type", "type IN ('Restaurant', 'Hotel', 'HomeStay', 'Resort')");
+                            t.HasCheckConstraint("CK_Place_Type", "type IN ('Restaurant', 'Coffee', 'Hotel', 'HomeStay', 'Resort', 'Market', 'Church', 'Museum', 'Tunnel', 'Zoo', 'Park')");
                         });
                 });
 
@@ -764,6 +810,57 @@ namespace ZeafloServer.Infrastructure.Migrations
                     b.ToTable("SavePosts");
                 });
 
+            modelBuilder.Entity("ZeafloServer.Domain.Entities.Schedule", b =>
+                {
+                    b.Property<Guid>("ScheduleId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("schedule_id");
+
+                    b.Property<Guid>("CityId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("city_id");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("created_at");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Note")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)")
+                        .HasColumnName("note");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("title");
+
+                    b.Property<Guid>("TripDurationId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("trip_duration_id");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("ScheduleId");
+
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("TripDurationId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Schedules");
+                });
+
             modelBuilder.Entity("ZeafloServer.Domain.Entities.StoryActivity", b =>
                 {
                     b.Property<Guid>("StoryActivityId")
@@ -844,6 +941,37 @@ namespace ZeafloServer.Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Tokens");
+                });
+
+            modelBuilder.Entity("ZeafloServer.Domain.Entities.TripDuration", b =>
+                {
+                    b.Property<Guid>("TripDurationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("trip_duration_id");
+
+                    b.Property<int>("Days")
+                        .HasColumnType("int")
+                        .HasColumnName("days");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Label")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("label");
+
+                    b.Property<int>("Nights")
+                        .HasColumnType("int")
+                        .HasColumnName("nights");
+
+                    b.HasKey("TripDurationId");
+
+                    b.ToTable("TripDurations");
                 });
 
             modelBuilder.Entity("ZeafloServer.Domain.Entities.User", b =>
@@ -1129,6 +1257,18 @@ namespace ZeafloServer.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("ZeafloServer.Domain.Entities.PhotoPost", b =>
+                {
+                    b.HasOne("ZeafloServer.Domain.Entities.User", "User")
+                        .WithMany("PhotoPosts")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_PhotoPost_User_UserId");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("ZeafloServer.Domain.Entities.Place", b =>
                 {
                     b.HasOne("ZeafloServer.Domain.Entities.City", "City")
@@ -1272,6 +1412,36 @@ namespace ZeafloServer.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("ZeafloServer.Domain.Entities.Schedule", b =>
+                {
+                    b.HasOne("ZeafloServer.Domain.Entities.City", "City")
+                        .WithMany("Schedules")
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_Schedule_City_CityId");
+
+                    b.HasOne("ZeafloServer.Domain.Entities.TripDuration", "TripDuration")
+                        .WithMany("Schedules")
+                        .HasForeignKey("TripDurationId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_Schedule_TripDuration_TripDurationId");
+
+                    b.HasOne("ZeafloServer.Domain.Entities.User", "User")
+                        .WithMany("Schedules")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_Schedule_User_UserId");
+
+                    b.Navigation("City");
+
+                    b.Navigation("TripDuration");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("ZeafloServer.Domain.Entities.StoryActivity", b =>
                 {
                     b.HasOne("ZeafloServer.Domain.Entities.User", "User")
@@ -1332,6 +1502,8 @@ namespace ZeafloServer.Infrastructure.Migrations
             modelBuilder.Entity("ZeafloServer.Domain.Entities.City", b =>
                 {
                     b.Navigation("Places");
+
+                    b.Navigation("Schedules");
                 });
 
             modelBuilder.Entity("ZeafloServer.Domain.Entities.MemberShipLevel", b =>
@@ -1361,6 +1533,11 @@ namespace ZeafloServer.Infrastructure.Migrations
                     b.Navigation("SavePosts");
                 });
 
+            modelBuilder.Entity("ZeafloServer.Domain.Entities.TripDuration", b =>
+                {
+                    b.Navigation("Schedules");
+                });
+
             modelBuilder.Entity("ZeafloServer.Domain.Entities.User", b =>
                 {
                     b.Navigation("Comments");
@@ -1375,6 +1552,8 @@ namespace ZeafloServer.Infrastructure.Migrations
 
                     b.Navigation("PasswordResetTokens");
 
+                    b.Navigation("PhotoPosts");
+
                     b.Navigation("PlaceLikes");
 
                     b.Navigation("PostReactions");
@@ -1388,6 +1567,8 @@ namespace ZeafloServer.Infrastructure.Migrations
                     b.Navigation("Reports");
 
                     b.Navigation("SavePosts");
+
+                    b.Navigation("Schedules");
 
                     b.Navigation("SenderMessages");
 

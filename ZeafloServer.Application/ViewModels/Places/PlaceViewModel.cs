@@ -12,6 +12,7 @@ namespace ZeafloServer.Application.ViewModels.Places
     {
         public Guid PlaceId { get; set; }
         public string Name { get; set; } = string.Empty;
+        public string Address { get; set; } = string.Empty;
         public PlaceType Type { get; set; } 
         public Guid CityId { get; set; }
         public double Latitude { get; set; }
@@ -21,6 +22,9 @@ namespace ZeafloServer.Application.ViewModels.Places
         public bool IsOpen { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
+        public int FavoriteCount { get; set; }
+        public string Location { get; set; } = string.Empty;
+        public string? ImageUrl { get; set; }
 
         public static PlaceViewModel FromPlace(Place place)
         {
@@ -28,6 +32,7 @@ namespace ZeafloServer.Application.ViewModels.Places
             {
                 PlaceId = place.Id,
                 Name = place.Name,
+                Address = place.Address,
                 Type = place.Type,
                 CityId = place.CityId,
                 Latitude = place.Latitude,
@@ -37,6 +42,9 @@ namespace ZeafloServer.Application.ViewModels.Places
                 IsOpen = place.IsOpen,
                 CreatedAt = place.CreatedAt,
                 UpdatedAt = place.UpdatedAt,
+                FavoriteCount = place.PlaceLikes.Count,
+                Location = place.City?.Name ?? string.Empty,
+                ImageUrl = place.PlaceImages.Any() ? place.PlaceImages.First().ImageUrl : null
             };
         }
     }

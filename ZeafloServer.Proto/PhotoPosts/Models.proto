@@ -1,0 +1,29 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "ZeafloServer.Proto.PhotoPosts";
+import "google/protobuf/timestamp.proto";
+
+enum AnnotationType {
+     Text = 0;
+     Time = 1;
+     Location = 2;
+     Weather = 3;
+}
+
+message GrpcPhotoPost {
+  string id = 1;
+  string userId = 2;
+  string imageUrl = 3;
+  AnnotationType annotationType = 4;
+  string annotationValue = 5;
+  google.protobuf.Timestamp sentAt = 6;
+  bool isDeleted = 7;
+}
+
+message GetPhotoPostsByIdsResult {
+  repeated GrpcPhotoPost photoPosts = 1;
+}
+
+message GetPhotoPostsByIdsRequest {
+  repeated string ids = 1;
+}

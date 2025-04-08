@@ -35,7 +35,10 @@ namespace ZeafloServer.Domain.Helpers
         public async Task<string> UploadImageAsync(Bitmap image, string fileName, string folder)
         {
             using var stream = new MemoryStream();
-            image.Save(stream, ImageFormat.Png);
+
+            // Clone bitmap to void GDI+
+            using var cloned = new Bitmap(image);
+            cloned.Save(stream, ImageFormat.Png);
             stream.Position = 0; // Reset position
 
             var uploadParams = new ImageUploadParams()

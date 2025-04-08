@@ -37,9 +37,23 @@ namespace ZeafloServer.Application.Services
             ));
         }
 
-        public async Task<PageResult<PostViewModel>> GetAllPostsAsync(PageQuery query, ActionStatus status, string searchTerm = "", SortQuery? sortQuery = null)
+        public async Task<PageResult<PostViewModel>> GetAllPostsAsync(
+            PageQuery query, 
+            ActionStatus status, 
+            string scope = "others", 
+            string searchTerm = "", 
+            Guid? userId = null,
+            SortQuery? sortQuery = null
+        )
         {
-            return await _bus.QueryAsync(new GetAllPostsQuery(query, status, searchTerm, sortQuery));   
+            return await _bus.QueryAsync(new GetAllPostsQuery(
+                query, 
+                status, 
+                scope, 
+                searchTerm, 
+                userId,
+                sortQuery
+            ));   
         }
 
         public async Task<Guid> ReactPostAsync(ReactPostRequest request)

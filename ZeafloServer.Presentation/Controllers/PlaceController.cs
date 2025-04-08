@@ -47,12 +47,19 @@ namespace ZeafloServer.Presentation.Controllers
         [SwaggerResponse(400, "Invalid request")]
         public async Task<IActionResult> GetAllPlacesAsync(
             [FromQuery] PageQuery query,
+            [FromQuery] List<PlaceType> types,
             [FromQuery] string searchTerm = "",
             [FromQuery] ActionStatus status = ActionStatus.NotDeleted,
             [FromQuery][SortableFieldsAttribute<PlaceViewModelSortProvider, PlaceViewModel, Place>] SortQuery? sortQuery = null
         )
         {
-            return Response(await _placeService.GetAllPlacesAsync(query, status, searchTerm, sortQuery));
+            return Response(await _placeService.GetAllPlacesAsync(
+                query, 
+                status, 
+                types, 
+                searchTerm, 
+                sortQuery
+            ));
         }
 
         /// <summary>
@@ -68,6 +75,22 @@ namespace ZeafloServer.Presentation.Controllers
         public async Task<IActionResult> CreatePlaceAsync([FromBody] CreatePlaceRequest request)
         {
             return Response(await _placeService.CreatePlaceAsync(request));
+        }
+
+        /// <summary>
+        /// Imports a list of place entry and returns theirs unique identifier.
+        /// </summary>
+        /// <param name="request">The request payload containing list of place details.</param>
+        /// <returns>Returns the UIDs of the saved places or an error message if the request is invalid.</returns>
+        [Route("import")]
+        [HttpPost]
+        [AllowAnonymous]
+        [SwaggerOperation(Summary = "Import place", Description = "Import a list of place and returns UIDs.")]
+        [SwaggerResponse(200, "Request successful", typeof(ResponseMessage<List<Guid>>))]
+        [SwaggerResponse(400, "Invalid request")]
+        public async Task<IActionResult> ImportPlacesAsync([FromForm] ImportPlaceRequest request)
+        {
+            return Response(await _placeService.ImportPlacesAsync(request));
         }
     }
 }

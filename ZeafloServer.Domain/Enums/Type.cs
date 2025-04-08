@@ -25,9 +25,16 @@ namespace ZeafloServer.Domain.Enums
     public enum PlaceType
     {
         Restaurant,
+        Coffee,
         Hotel,
         HomeStay,
-        Resort
+        Resort,
+        Market,
+        Church,
+        Museum,
+        Tunnel,
+        Zoo,
+        Park
     }
 
     public enum LevelType
@@ -63,5 +70,13 @@ namespace ZeafloServer.Domain.Enums
         ParametersLack = 303,
         TokenExpiration,
         Other
+    }
+
+    public enum AnnotationType
+    {
+        Text,
+        Time,
+        Location,
+        Weather
     }
 }

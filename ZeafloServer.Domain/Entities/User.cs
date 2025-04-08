@@ -121,6 +121,12 @@ namespace ZeafloServer.Domain.Entities
         [InverseProperty("User")]
         public virtual Processing? Processing { get; set; }
 
+        [InverseProperty("User")]
+        public virtual ICollection<Schedule> Schedules { get; set; } = new List<Schedule>();
+
+        [InverseProperty("User")]
+        public virtual ICollection<PhotoPost> PhotoPosts { get; set; } = new List<PhotoPost>();
+
         public User(
             Guid userId,
             string username,

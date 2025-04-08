@@ -11,6 +11,7 @@ namespace ZeafloServer.Shared.Places
     public sealed record PlaceViewModel(
          Guid PlaceId,
          string Name,
+         string Address,
          PlaceType Type,
          Guid CityId,
          double Latitude,

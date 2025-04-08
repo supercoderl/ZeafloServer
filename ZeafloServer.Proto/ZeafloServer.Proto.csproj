@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="PhotoPosts\Models.proto" />
     <None Remove="Cities\Models.proto" />
   </ItemGroup>
 
@@ -17,6 +18,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Protobuf Include="PhotoPosts\PhotoPostsApi.proto">
+      <GrpcServices>Both</GrpcServices>
+    </Protobuf>
+    <Protobuf Include="PhotoPosts\Models.proto">
+      <GrpcServices>Both</GrpcServices>
+    </Protobuf>
     <Protobuf Include="Comments\Models.proto" GrpcServices="Both" />
     <Protobuf Include="Comments\CommentsApi.proto" GrpcServices="Both" />
     <Protobuf Include="FriendShips\Models.proto" GrpcServices="Both" />

@@ -15,7 +15,9 @@ namespace ZeafloServer.Application.Queries.Posts.GetAll
     (
           PageQuery Query,
           ActionStatus Status,
+          string Scope = "others",
           string SearchTerm = "",
+          Guid? UserId = null,
           SortQuery? SortQuery = null
     ) : IRequest<PageResult<PostViewModel>>;
 }

@@ -16,6 +16,9 @@ namespace ZeafloServer.Domain.Entities
         [Column("name")]
         public string Name { get; private set; }
 
+        [Column("address")]
+        public string Address { get; private set; }
+
         [Column("type")]
         public PlaceType Type { get; private set; }
 
@@ -56,6 +59,7 @@ namespace ZeafloServer.Domain.Entities
         public Place(
             Guid placeId,
             string name,
+            string address,
             PlaceType type,
             Guid cityId,
             double latitude,
@@ -69,6 +73,7 @@ namespace ZeafloServer.Domain.Entities
         {
             PlaceId = placeId;
             Name = name;
+            Address = address;
             Type = type;
             CityId = cityId;
             Latitude = latitude;
@@ -81,6 +86,7 @@ namespace ZeafloServer.Domain.Entities
         }
 
         public void SetName( string name ) { Name = name; }
+        public void SetAddress(string address) { Address = address; }
         public void SetType(PlaceType type) { Type = type; }
         public void SetCityId( Guid cityId ) { CityId = cityId; }
         public void SetLatitude( double latitude ) { Latitude = latitude; }

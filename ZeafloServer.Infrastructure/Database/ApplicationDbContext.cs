@@ -33,6 +33,9 @@ namespace ZeafloServer.Infrastructure.Database
         public DbSet<UserStatus> UserStatuses { get; set; } = null!;
         public DbSet<PostReaction> PostReactions { get; set; } = null!;
         public DbSet<PostMedia> PostMedia { get; set; } = null!;
+        public DbSet<TripDuration> TripDurations { get; set; } = null!;
+        public DbSet<Schedule> Schedules { get; set; } = null!;
+        public DbSet<PhotoPost> PhotoPosts { get; set; } = null!;
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -83,6 +86,9 @@ namespace ZeafloServer.Infrastructure.Database
             modelBuilder.ApplyConfiguration(new UserStatusConfiguration());
             modelBuilder.ApplyConfiguration(new PostMediaConfiguration());
             modelBuilder.ApplyConfiguration(new PostReactionConfiguration());
+            modelBuilder.ApplyConfiguration(new TripDurationConfiguration());
+            modelBuilder.ApplyConfiguration(new ScheduleConfiguration());
+            modelBuilder.ApplyConfiguration(new PhotoPostConfiguration());
         }
     }
 }

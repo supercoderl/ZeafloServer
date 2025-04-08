@@ -52,10 +52,12 @@ namespace ZeafloServer.Presentation.Controllers
             [FromQuery] PageQuery query,
             [FromQuery] string searchTerm = "",
             [FromQuery] ActionStatus status = ActionStatus.NotDeleted,
+            [FromQuery] string scope = "others",
+            [FromQuery] Guid? userId = null,
             [FromQuery][SortableFieldsAttribute<PostViewModelSortProvider, PostViewModel, Post>] SortQuery? sortQuery = null
         )
         {
-            return Response(await _postService.GetAllPostsAsync(query, status, searchTerm, sortQuery));
+            return Response(await _postService.GetAllPostsAsync(query, status, scope, searchTerm, userId, sortQuery));
         }
 
         /// <summary>

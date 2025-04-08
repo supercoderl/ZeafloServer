@@ -11,6 +11,7 @@ using ZeafloServer.Application.ViewModels.Posts;
 using ZeafloServer.Application.ViewModels.Sorting;
 using ZeafloServer.Domain.Entities;
 using ZeafloServer.Domain.Enums;
+using ZeafloServer.Domain.Interfaces;
 using ZeafloServer.Domain.Interfaces.IRepositories;
 
 namespace ZeafloServer.Application.Queries.Posts.GetAll
@@ -19,14 +20,17 @@ namespace ZeafloServer.Application.Queries.Posts.GetAll
     {
         private readonly IPostRepository _postRepository;
         private readonly ISortingExpressionProvider<PostViewModel, Post> _sortingExpressionProvider;
+        private readonly IUser _user;
 
         public GetAllPostsQueryHandler(
             IPostRepository postRepository,
-            ISortingExpressionProvider<PostViewModel, Post> sortingExpressionProvider
+            ISortingExpressionProvider<PostViewModel, Post> sortingExpressionProvider,
+            IUser user
         )
         {
             _postRepository = postRepository;
             _sortingExpressionProvider = sortingExpressionProvider;
+            _user = user;
         }
 
         public async Task<PageResult<PostViewModel>> Handle(GetAllPostsQuery request, CancellationToken cancellationToken)
@@ -43,6 +47,8 @@ namespace ZeafloServer.Application.Queries.Posts.GetAll
             if (!string.IsNullOrWhiteSpace(request.SearchTerm))
                 query = query.Where(x => x.Content.Contains(request.SearchTerm)
                );
+
+            query = QueryByScope(query, request.Scope, request.UserId);
 
             var totalCount = await query.CountAsync(cancellationToken);
 
@@ -71,6 +77,16 @@ namespace ZeafloServer.Application.Queries.Posts.GetAll
                 request.Query.PageIndex,
                 request.Query.PageSize
             );
+        }
+
+        private IQueryable<Post> QueryByScope(IQueryable<Post> query, string scope = "others", Guid? userId = null)
+        {
+            return scope switch
+            {
+                "mine" => query.Where(x => x.UserId == _user.GetUserId()),
+                "user" => query.Where(x => x.UserId == userId),
+                _ => query.Where(x => x.UserId != _user.GetUserId())
+            };
         }
     }
 }

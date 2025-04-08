@@ -17,7 +17,11 @@ using ZeafloServer.Domain.Commands.MapThemes.CreateMapTheme;
 using ZeafloServer.Domain.Commands.MemberShipLevels.CreateMemberShipLevel;
 using ZeafloServer.Domain.Commands.Messages.CreateMessage;
 using ZeafloServer.Domain.Commands.Messages.UpdateUnreadMessage;
+using ZeafloServer.Domain.Commands.PhotoPosts.CreatePhotoPost;
+using ZeafloServer.Domain.Commands.PlaceImages.CreatePlaceImage;
 using ZeafloServer.Domain.Commands.Places.CreatePlace;
+using ZeafloServer.Domain.Commands.Places.ImportPlace;
+using ZeafloServer.Domain.Commands.Places.ReactPlace;
 using ZeafloServer.Domain.Commands.PostMedias.CreatePostMedia;
 using ZeafloServer.Domain.Commands.Posts.CreatePost;
 using ZeafloServer.Domain.Commands.Posts.ReactPost;
@@ -26,6 +30,7 @@ using ZeafloServer.Domain.Commands.Processes.CreateProcess;
 using ZeafloServer.Domain.Commands.Processes.UpdateProcess;
 using ZeafloServer.Domain.Commands.Tokens.CreateToken;
 using ZeafloServer.Domain.Commands.Tokens.UpdateToken;
+using ZeafloServer.Domain.Commands.TripDurations.CreateTripDuration;
 using ZeafloServer.Domain.Commands.Users.ChangePassword;
 using ZeafloServer.Domain.Commands.Users.ForgotPassword;
 using ZeafloServer.Domain.Commands.Users.Login;
@@ -96,9 +101,20 @@ namespace ZeafloServer.Domain.Extensions
 
             //Place
             services.AddScoped<IRequestHandler<CreatePlaceCommand, Guid>, CreatePlaceCommandHandler>();
+            services.AddScoped<IRequestHandler<ReactPlaceCommand, Guid>, ReactPlaceCommandHandler>();
+            services.AddScoped<IRequestHandler<ImportPlaceCommand, List<Guid>>, ImportPlaceCommandHandler>();
+
+            //Place Image
+            services.AddScoped<IRequestHandler<CreatePlaceImageCommand, Guid>, CreatePlaceImageCommandHandler>();
 
             //City
             services.AddScoped<IRequestHandler<CreateCityCommand, Guid>, CreateCityCommandHandler>();
+
+            //Trip Duration 
+            services.AddScoped<IRequestHandler<CreateTripDurationCommand, Guid>, CreateTripDurationCommandHandler>();
+
+            //Photo Post
+            services.AddScoped<IRequestHandler<CreatePhotoPostCommand, Guid>, CreatePhotoPostCommandHandler>();
 
             return services;
         }
@@ -124,6 +140,7 @@ namespace ZeafloServer.Domain.Extensions
             services.AddSingleton<QRCodeHelpers>();
             services.AddSingleton<UploadHelpers>();
             services.AddSingleton<ProcessingHelpers>();
+            services.AddSingleton<FileHelpers>();
 
             return services;
         }

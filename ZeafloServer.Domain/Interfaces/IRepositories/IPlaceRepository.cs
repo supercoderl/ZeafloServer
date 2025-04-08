@@ -9,5 +9,6 @@ namespace ZeafloServer.Domain.Interfaces.IRepositories
 {
     public interface IPlaceRepository : IRepository<Place, Guid>
     {
+        IQueryable<Place> QueryByCity(Guid cityId);
     }
 }

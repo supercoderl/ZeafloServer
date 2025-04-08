@@ -19,6 +19,9 @@ namespace ZeafloServer.Infrastructure.Configurations
                 .IsRequired()
                 .HasColumnType("varchar(200)");
 
+            builder.Property(p => p.Address)
+                .IsRequired();
+
             builder.Property(p => p.Type)
                 .IsRequired()
                 .HasConversion<string>();
@@ -54,7 +57,7 @@ namespace ZeafloServer.Infrastructure.Configurations
             builder.Property(p => p.UpdatedAt)
                 .HasColumnType("timestamp");
 
-            builder.ToTable(tb => tb.HasCheckConstraint("CK_Place_Type", "type IN ('Restaurant', 'Hotel', 'HomeStay', 'Resort')"));
+            builder.ToTable(tb => tb.HasCheckConstraint("CK_Place_Type", "type IN ('Restaurant', 'Coffee', 'Hotel', 'HomeStay', 'Resort', 'Market', 'Church', 'Museum', 'Tunnel', 'Zoo', 'Park')"));
 
             builder.HasOne(c => c.City)
                 .WithMany(p => p.Places)

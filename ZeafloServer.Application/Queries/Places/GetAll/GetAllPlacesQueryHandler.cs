@@ -41,16 +41,24 @@ namespace ZeafloServer.Application.Queries.Places.GetAll
             };
 
             if (!string.IsNullOrWhiteSpace(request.SearchTerm))
-                query = query.Where(x => x.Name.Contains(request.SearchTerm)
-               );
+                query = query.Where(x => x.Name.Contains(request.SearchTerm));
+
+            if(request.Types.Count() > 0)
+            {
+                query = query.Where(x => request.Types.Contains(x.Type));
+            }
 
             var totalCount = await query.CountAsync(cancellationToken);
 
             query = query.GetOrderedQueryable(request.SortQuery, _sortingExpressionProvider);
 
             query = query
+                .OrderBy(x => x.CreatedAt)
                 .Skip((request.Query.PageIndex - 1) * request.Query.PageSize)
-                .Take(request.Query.PageSize);
+                .Take(request.Query.PageSize)
+                .Include(x => x.PlaceLikes)
+                .Include(x => x.City)
+                .Include(x => x.PlaceImages);
 
             var places = await query.Select(place => PlaceViewModel.FromPlace(place)).ToListAsync();
 

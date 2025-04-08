@@ -15,7 +15,9 @@ namespace ZeafloServer.Application.Interfaces
         public Task<PageResult<PostViewModel>> GetAllPostsAsync(
             PageQuery query,
             ActionStatus status,
+            string scope = "others",
             string searchTerm = "",
+            Guid? userId = null,
             SortQuery? sortQuery = null
         );
         public Task<Guid> CreatePostAsync(CreatePostRequest request);

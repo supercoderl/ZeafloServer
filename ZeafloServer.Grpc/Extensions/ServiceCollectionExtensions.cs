@@ -74,6 +74,7 @@ namespace ZeafloServer.Grpc.Extensions
             services.AddSingleton<ITokensContext, TokensContext>();
             services.AddSingleton<IUserLevelsContextcs, UserLevelsContext>();
             services.AddSingleton<IUserStatusesContext, UserStatusesContext>();
+            services.AddSingleton<IPhotoPostsContext, PhotoPostsContext>();
 
             return services;
         }

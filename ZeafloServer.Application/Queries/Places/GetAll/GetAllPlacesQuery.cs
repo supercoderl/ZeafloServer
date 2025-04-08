@@ -15,6 +15,7 @@ namespace ZeafloServer.Application.Queries.Places.GetAll
     (
           PageQuery Query,
           ActionStatus Status,
+          List<PlaceType> Types,
           string SearchTerm = "",
           SortQuery? SortQuery = null
     ) : IRequest<PageResult<PlaceViewModel>>;

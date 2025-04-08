@@ -31,6 +31,7 @@ namespace ZeafloServer.Grpc.Contexts
             return result.Places.Select(place => new PlaceViewModel(
                 Guid.Parse(place.Id),
                 place.Name,
+                place.Address,
                 (PlaceType)place.Type,
                 Guid.Parse(place.CityId),
                 place.Latitude,

@@ -72,6 +72,9 @@ namespace ZeafloServer.Infrastructure.Extensions
             services.AddScoped<IPostMediaRepository, PostMediaRepository>();
             services.AddScoped<IPostReactionRepository, PostReactionRepository>();
             services.AddScoped<IProcessingRepository, ProcessingRepository>();
+            services.AddScoped<ITripDurationRepository, TripDurationRepository>();
+            services.AddScoped<IScheduleRepository, ScheduleRepository>();
+            services.AddScoped<IPhotoPostRepository, PhotoPostRepository>();
 
             return services;
         }

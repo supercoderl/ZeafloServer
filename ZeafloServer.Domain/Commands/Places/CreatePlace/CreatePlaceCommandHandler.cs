@@ -33,6 +33,7 @@ namespace ZeafloServer.Domain.Commands.Places.CreatePlace
             var place = new Entities.Place(
                 request.PlaceId,
                 request.Name,
+                request.Address,
                 request.Type,
                 request.CityId,
                 request.Latitude,

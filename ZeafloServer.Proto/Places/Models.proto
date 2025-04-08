@@ -4,23 +4,31 @@ option csharp_namespace = "ZeafloServer.Proto.Places";
 
 enum PlaceType {
      Restaurant = 0;
-     Hotel = 1;
-     HomeStay = 2;
-     Resort = 3;
+     Coffee = 1;
+     Hotel = 2;
+     HomeStay = 3;
+     Resort = 4;
+     Market = 5;
+     Church = 6;
+     Museum = 7;
+     Tunnel = 8;
+     Zoo = 9;
+     Park = 10;
 }
 
 message GrpcPlace {
   string id = 1;
   string name = 2;
-  PlaceType type = 3;
-  string cityId = 4;
-  double latitude = 5;
-  double longitude = 6;
-  double rating = 7;
-  int32 reviewCount = 8;
-  bool isOpen = 9;
-  string location = 10;
-  bool isDeleted = 13;
+  string address= 3;
+  PlaceType type = 4;
+  string cityId = 5;
+  double latitude = 6;
+  double longitude = 7;
+  double rating = 8;
+  int32 reviewCount = 9;
+  bool isOpen = 10;
+  string location = 11;
+  bool isDeleted = 12;
 }
 
 message GetPlacesByIdsResult {

@@ -27,6 +27,9 @@ namespace ZeafloServer.Domain.Entities
         [InverseProperty("City")]
         public virtual ICollection<Place> Places { get; set; } = new List<Place>();
 
+        [InverseProperty("City")]
+        public virtual ICollection<Schedule> Schedules { get; set; } = new List<Schedule>();
+
         public City(
             Guid cityId,
             string name,

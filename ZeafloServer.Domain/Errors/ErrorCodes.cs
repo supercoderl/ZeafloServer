@@ -17,5 +17,6 @@ namespace ZeafloServer.Domain.Errors
         public const string ErrorInDeleting = "ERROR_DELETING";
         public const string ErrorInPredicting = "ERROR_PREDICTING";
         public const string UploadFailed = "UPLOAD_FAILED";
+        public const string InvalidFile = "INVALID_FILE";
     }
 }

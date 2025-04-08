@@ -5,6 +5,7 @@ using MassTransit;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using OfficeOpenXml;
 using RabbitMQ.Client;
 using ZeafloServer.Application.Extensions;
 using ZeafloServer.Application.Hubs;

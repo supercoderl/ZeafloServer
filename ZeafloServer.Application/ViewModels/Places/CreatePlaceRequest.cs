@@ -10,6 +10,7 @@ namespace ZeafloServer.Application.ViewModels.Places
     public sealed record CreatePlaceRequest
     (
         string Name,
+        string Address,
         PlaceType Type,
         Guid CityId,
         double Latitude,

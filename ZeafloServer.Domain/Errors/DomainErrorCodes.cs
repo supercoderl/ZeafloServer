@@ -123,5 +123,19 @@ namespace ZeafloServer.Domain.Errors
             public const string EmptyName = "CITY_EMPTY_NAME";
             public const string EmptyPostalCode = "CITY_EMPTY_POSTAL_CODE";
         }
+
+        public static class PlaceImage
+        {
+            //Place Image Validation
+            public const string EmptyPlaceImageId = "PLACE_IMAGE_EMPTY_PLACE_IMAGE_ID";
+            public const string EmptyImageUrl = "PLACE_IMAGE_EMPTY_IMAGE_URL";
+        }
+
+        public static class TripDuration
+        {
+            //Trip Duration Validation
+            public const string EmptyTripDurationId = "TRIP_DURATION_EMPTY_TRIP_DURATION_ID";
+            public const string EmptyLabel = "TRIP_DURATION_EMPTY_LABEL";
+        }
     }
 }

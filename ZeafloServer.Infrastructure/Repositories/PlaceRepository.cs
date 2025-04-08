@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,11 @@ namespace ZeafloServer.Infrastructure.Repositories
         public PlaceRepository(ApplicationDbContext context) : base(context)
         {
             
+        }
+
+        public IQueryable<Place> QueryByCity(Guid cityId)
+        {
+            return DbSet.Where(p => p.CityId == cityId);
         }
     }
 }

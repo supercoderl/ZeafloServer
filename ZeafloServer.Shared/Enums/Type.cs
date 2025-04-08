@@ -25,9 +25,16 @@ namespace ZeafloServer.Shared.Enums
     public enum PlaceType
     {
         Restaurant,
+        Coffee,
         Hotel,
         HomeStay,
-        Resort
+        Resort,
+        Market,
+        Church,
+        Museum,
+        Tunnel,
+        Zoo,
+        Park
     }
 
     public enum LevelType
@@ -42,5 +49,13 @@ namespace ZeafloServer.Shared.Enums
         Send,
         View,
         Receive
+    }
+
+    public enum AnnotationType
+    {
+        Text,
+        Time,
+        Location,
+        Weather
     }
 }

@@ -80,6 +80,10 @@ namespace ZeafloServer.Domain.Helpers
         [SupportedOSPlatform("windows")]
         public Bitmap ConvertBase64ToBitmap(string base64String)
         {
+            if (base64String.Contains(","))
+            {
+                base64String = base64String.Substring(base64String.IndexOf(",") + 1);
+            }
             byte[] imageBytes = Convert.FromBase64String(base64String); // Convert Base64 to byte array
             using MemoryStream ms = new MemoryStream(imageBytes); // Put byte into MemoryStream
             return new Bitmap(ms); // Convert to Bitmap

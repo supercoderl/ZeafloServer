@@ -9,5 +9,6 @@ namespace ZeafloServer.Domain.Interfaces.IRepositories
 {
     public interface ICityRepository : IRepository<City, Guid>
     {
+        Task<City?> GetCityByNameAsync(string city);
     }
 }
