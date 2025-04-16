@@ -25,5 +25,6 @@ namespace ZeafloServer.Application.Interfaces
         public Task<UserViewModel?> GetProfileAsync(Guid userId);
         public Task<object?> RefreshTokenAsync(RefreshTokenRequest request);
         public Task<string> RetrieveQrAsync(Guid userId);
+        public Task<string> ChangeUserAvatarAsync(ChangeUserAvatarRequest request);
     }
 }

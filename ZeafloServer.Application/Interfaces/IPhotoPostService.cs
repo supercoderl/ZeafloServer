@@ -21,5 +21,6 @@ namespace ZeafloServer.Application.Interfaces
             Guid? userId = null,
             SortQuery? sortQuery = null
         );
+        public Task<List<StorageViewModel>> GetStorageAsync(Guid userId);
     }
 }

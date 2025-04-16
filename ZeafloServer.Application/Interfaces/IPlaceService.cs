@@ -20,6 +20,7 @@ namespace ZeafloServer.Application.Interfaces
             string searchTerm = "",
             SortQuery? sortQuery = null
         );
+        public Task<PlaceViewModel?> GetPlaceByIdAsync(Guid placeId);
         public Task<Guid> CreatePlaceAsync(CreatePlaceRequest request);
         public Task<List<Guid>> ImportPlacesAsync(ImportPlaceRequest request);
     }

@@ -13,6 +13,7 @@ namespace ZeafloServer.Application.ViewModels.Places
         public Guid PlaceId { get; set; }
         public string Name { get; set; } = string.Empty;
         public string Address { get; set; } = string.Empty;
+        public string? Description { get; set; }
         public PlaceType Type { get; set; } 
         public Guid CityId { get; set; }
         public double Latitude { get; set; }
@@ -33,6 +34,7 @@ namespace ZeafloServer.Application.ViewModels.Places
                 PlaceId = place.Id,
                 Name = place.Name,
                 Address = place.Address,
+                Description = place.Description,
                 Type = place.Type,
                 CityId = place.CityId,
                 Latitude = place.Latitude,

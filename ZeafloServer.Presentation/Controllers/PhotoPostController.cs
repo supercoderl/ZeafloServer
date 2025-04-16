@@ -13,6 +13,7 @@ using ZeafloServer.Presentation.Models;
 using ZeafloServer.Presentation.Swagger;
 using ZeafloServer.Application.ViewModels.PhotoPosts;
 using ZeafloServer.Domain.Entities;
+using ZeafloServer.Domain.Interfaces;
 
 namespace ZeafloServer.Presentation.Controllers
 {
@@ -23,14 +24,17 @@ namespace ZeafloServer.Presentation.Controllers
     {
         private readonly INotificationHandler<DomainNotification> _notifications;
         private readonly IPhotoPostService _photoPostService;
+        private readonly IUser _user;
 
         public PhotoPostController(
             INotificationHandler<DomainNotification> notifications,
-            IPhotoPostService photoPostService
+            IPhotoPostService photoPostService,
+            IUser user
         ) : base(notifications)
         {
             _notifications = notifications;
             _photoPostService = photoPostService;
+            _user = user;
         }
 
         /// <summary>
@@ -58,6 +62,20 @@ namespace ZeafloServer.Presentation.Controllers
         )
         {
             return Response(await _photoPostService.GetAllPhotoPostsAsync(query, status, scope, searchTerm, userId, sortQuery));
+        }
+
+        /// <summary>
+        /// Retrieves a list of storage photo posts
+        /// </summary>
+        /// <returns>Returns a list of storage photo posts or an error message if the request is invalid.</returns>
+        [Route("storage")]
+        [HttpGet]
+        [SwaggerOperation(Summary = "Get storage", Description = "Return a list of storage photo posts.")]
+        [SwaggerResponse(200, "Request successful", typeof(ResponseMessage<List<StorageViewModel>>))]
+        [SwaggerResponse(400, "Invalid request")]
+        public async Task<IActionResult> GetStorageAsync()
+        {
+            return Response(await _photoPostService.GetStorageAsync(_user.GetUserId()));
         }
 
         /// <summary>

@@ -25,7 +25,6 @@
     <Folder Include="Queries\Messages\GetById\" />
     <Folder Include="Queries\Notifications\GetById\" />
     <Folder Include="Queries\PhotoPosts\GetById\" />
-    <Folder Include="Queries\Places\GetById\" />
     <Folder Include="Queries\Posts\GetById\" />
     <Folder Include="ViewModels\PostReactions\" />
   </ItemGroup>

@@ -27,11 +27,13 @@ namespace ZeafloServer.Application.ViewModels.Users
         public DateTime? UpdatedAt { get; set; }
         public int FriendsCount { get; set; }
         public UserLevelInfo? UserLevel { get; set; }
+        public UserSubscriptionInfo? UserSubscription { get; set; }
 
         public static UserViewModel FromUser(
             User user, 
             int friendCount,
-            UserLevelInfo? userLevel
+            UserLevelInfo? userLevel,
+            UserSubscriptionInfo? userSubscription
         )
         {
             return new UserViewModel
@@ -52,7 +54,8 @@ namespace ZeafloServer.Application.ViewModels.Users
                 CreatedAt = user.CreatedAt,
                 UpdatedAt = user.UpdatedAt,
                 FriendsCount = friendCount,
-                UserLevel = userLevel
+                UserLevel = userLevel,
+                UserSubscription = userSubscription
             };
         }
     }
@@ -66,6 +69,20 @@ namespace ZeafloServer.Application.ViewModels.Users
         {
             LevelType = userLevel?.MemberShipLevel?.Type ?? LevelType.Silver;
             ZeafloPoint = userLevel?.ZeafloPoint ?? 0;
+        }
+    }
+
+    public class UserSubscriptionInfo
+    {
+        public string PlanName { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
+
+        public UserSubscriptionInfo(UserSubscription? userSubscription)
+        {
+            PlanName = userSubscription?.Plan?.Name ?? string.Empty;
+            StartDate = userSubscription?.StartDate ?? DateTime.Now;
+            EndDate = userSubscription?.EndDate;
         }
     }
 }

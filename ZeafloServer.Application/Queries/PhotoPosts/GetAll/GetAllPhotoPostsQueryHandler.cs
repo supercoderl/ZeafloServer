@@ -58,7 +58,8 @@ namespace ZeafloServer.Application.Queries.PhotoPosts.GetAll
             query = query
                 .Skip((request.Query.PageIndex - 1) * request.Query.PageSize)
                 .Take(request.Query.PageSize)
-                .Include(post => post.User);
+                .Include(post => post.User)
+                .OrderByDescending(post => post.SentAt);
 
             var posts = await query
                 .Select(post => PhotoPostViewModel.FromPhotoPost(post))

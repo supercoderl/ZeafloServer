@@ -97,6 +97,7 @@ namespace ZeafloServer.Presentation.Extensions
             services.AddOptions<TokenSettings>().Bind(configuration.GetSection("Auth")).ValidateOnStart();
             services.AddOptions<MailSettings>().Bind(configuration.GetSection("Mail")).ValidateOnStart();
             services.AddOptions<DeepseekSettings>().Bind(configuration.GetSection("Deepseek")).ValidateOnStart();
+            services.AddOptions<WeatherSettings>().Bind(configuration.GetSection("OpenWeather")).ValidateOnStart();
 
             return services;
         }

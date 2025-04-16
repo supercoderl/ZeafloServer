@@ -108,6 +108,22 @@ namespace ZeafloServer.Presentation.Controllers
         }
 
         /// <summary>
+        /// Change user avatar
+        /// </summary>
+        /// <param name="request">Change avatar request data</param>
+        /// <returns>Returns avatar string view model or error message</returns>
+        [Route("change-avatar")]
+        [HttpPut]
+        [AllowAnonymous]
+        [SwaggerOperation(Summary = "Change user avatar", Description = "Change user avatar and returns view model.")]
+        [SwaggerResponse(200, "Request successful", typeof(ResponseMessage<string>))]
+        [SwaggerResponse(400, "Invalid request")]
+        public async Task<IActionResult> ChangeUserAvatarAsync([FromBody] ChangeUserAvatarRequest request)
+        {
+            return Response(await _userService.ChangeUserAvatarAsync(request));
+        }
+
+        /// <summary>
         /// Change password
         /// </summary>
         /// <param name="request">Change password request data</param>

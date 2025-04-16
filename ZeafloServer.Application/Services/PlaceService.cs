@@ -7,6 +7,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using ZeafloServer.Application.Interfaces;
 using ZeafloServer.Application.Queries.Places.GetAll;
+using ZeafloServer.Application.Queries.Places.GetById;
 using ZeafloServer.Application.ViewModels;
 using ZeafloServer.Application.ViewModels.Places;
 using ZeafloServer.Application.ViewModels.Sorting;
@@ -34,6 +35,7 @@ namespace ZeafloServer.Application.Services
                 Guid.NewGuid(),
                 request.Name,
                 request.Address,
+                request.Description,
                 request.Type,
                 request.CityId,
                 request.Latitude,
@@ -47,6 +49,11 @@ namespace ZeafloServer.Application.Services
         public async Task<PageResult<PlaceViewModel>> GetAllPlacesAsync(PageQuery query, ActionStatus status, List<PlaceType> types, string searchTerm = "", SortQuery? sortQuery = null)
         {
             return await _bus.QueryAsync(new GetAllPlacesQuery(query, status, types, searchTerm, sortQuery));  
+        }
+
+        public async Task<PlaceViewModel?> GetPlaceByIdAsync(Guid placeId)
+        {
+            return await _bus.QueryAsync(new GetPlaceByIdQuery(placeId));
         }
 
         public async Task<List<Guid>> ImportPlacesAsync(ImportPlaceRequest request)

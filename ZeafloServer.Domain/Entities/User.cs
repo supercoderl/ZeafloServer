@@ -127,6 +127,9 @@ namespace ZeafloServer.Domain.Entities
         [InverseProperty("User")]
         public virtual ICollection<PhotoPost> PhotoPosts { get; set; } = new List<PhotoPost>();
 
+        [InverseProperty("User")]
+        public virtual ICollection<UserSubscription> UserSubscriptions { get; set; } = new List<UserSubscription>();
+
         public User(
             Guid userId,
             string username,

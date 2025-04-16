@@ -36,6 +36,8 @@ namespace ZeafloServer.Infrastructure.Database
         public DbSet<TripDuration> TripDurations { get; set; } = null!;
         public DbSet<Schedule> Schedules { get; set; } = null!;
         public DbSet<PhotoPost> PhotoPosts { get; set; } = null!;
+        public DbSet<Plan> Plans { get; set; } = null!;
+        public DbSet<UserSubscription> UserSubscriptions { get; set; } = null!;
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -89,6 +91,8 @@ namespace ZeafloServer.Infrastructure.Database
             modelBuilder.ApplyConfiguration(new TripDurationConfiguration());
             modelBuilder.ApplyConfiguration(new ScheduleConfiguration());
             modelBuilder.ApplyConfiguration(new PhotoPostConfiguration());
+            modelBuilder.ApplyConfiguration(new PlanConfiguration());
+            modelBuilder.ApplyConfiguration(new UserSubscriptionConfiguration());
         }
     }
 }

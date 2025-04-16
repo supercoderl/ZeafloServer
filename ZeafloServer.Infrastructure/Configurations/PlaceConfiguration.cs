@@ -22,6 +22,8 @@ namespace ZeafloServer.Infrastructure.Configurations
             builder.Property(p => p.Address)
                 .IsRequired();
 
+            builder.Property(p => p.Description);
+
             builder.Property(p => p.Type)
                 .IsRequired()
                 .HasConversion<string>();

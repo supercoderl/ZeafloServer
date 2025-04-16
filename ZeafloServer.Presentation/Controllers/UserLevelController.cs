@@ -14,6 +14,8 @@ using ZeafloServer.Presentation.Models;
 using ZeafloServer.Presentation.Swagger;
 using ZeafloServer.Application.ViewModels.UserLevels;
 using ZeafloServer.Domain.Interfaces;
+using ZeafloServer.Application.Services;
+using ZeafloServer.Application.ViewModels.Users;
 
 namespace ZeafloServer.Presentation.Controllers
 {
@@ -49,6 +51,22 @@ namespace ZeafloServer.Presentation.Controllers
         public async Task<IActionResult> GetUserLevelAsync()
         {
             return Response(await _userLevelService.GetUserLevelAsync(_user.GetUserId()));
+        }
+
+        /// <summary>
+        /// Add point
+        /// </summary>
+        /// <param name="request">Add point request data</param>
+        /// <returns>Returns uid or error message</returns>
+        [Route("add-point")]
+        [HttpPost]
+        [AllowAnonymous]
+        [SwaggerOperation(Summary = "Add Point", Description = "Add point of user and returns uid.")]
+        [SwaggerResponse(200, "Request successful", typeof(ResponseMessage<Guid>))]
+        [SwaggerResponse(400, "Invalid request")]
+        public async Task<IActionResult> AddPointAsync([FromBody] AddPointRequest request)
+        {
+            return Response(await _userLevelService.AddPointAsync(request));
         }
     }
 }

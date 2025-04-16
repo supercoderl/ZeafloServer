@@ -20,15 +20,16 @@ message GrpcPlace {
   string id = 1;
   string name = 2;
   string address= 3;
-  PlaceType type = 4;
-  string cityId = 5;
-  double latitude = 6;
-  double longitude = 7;
-  double rating = 8;
-  int32 reviewCount = 9;
-  bool isOpen = 10;
-  string location = 11;
-  bool isDeleted = 12;
+  string description = 4;
+  PlaceType type = 5;
+  string cityId = 6;
+  double latitude = 7;
+  double longitude = 8;
+  double rating = 9;
+  int32 reviewCount = 10;
+  bool isOpen = 11;
+  string location = 12;
+  bool isDeleted = 13;
 }
 
 message GetPlacesByIdsResult {

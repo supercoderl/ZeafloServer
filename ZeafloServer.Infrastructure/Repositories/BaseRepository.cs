@@ -54,16 +54,13 @@ namespace ZeafloServer.Infrastructure.Repositories
             return DbSet.AsNoTracking();
         }
 
-        public virtual async Task<TEntity?> GetByIdAsync(TId id, params Expression<Func<TEntity, object>>[] includes)
+        public virtual async Task<TEntity?> GetByIdAsync(TId id, Func<IQueryable<TEntity>, IQueryable<TEntity>>? includeFunc = null)
         {
             IQueryable<TEntity> query = DbSet;
 
-            if (includes != null)
+            if (includeFunc != null)
             {
-                foreach (var include in includes)
-                {
-                    query = query.Include(include);
-                }
+                query = includeFunc(query);
             }
 
             return await query.FirstOrDefaultAsync(e => e.Id.Equals(id));

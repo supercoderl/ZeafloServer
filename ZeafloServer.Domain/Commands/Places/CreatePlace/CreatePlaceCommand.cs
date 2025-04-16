@@ -15,6 +15,7 @@ namespace ZeafloServer.Domain.Commands.Places.CreatePlace
         public Guid PlaceId { get; }
         public string Name { get; }
         public string Address { get; }
+        public string? Description { get; }
         public PlaceType Type { get; }
         public Guid CityId { get; }
         public double Latitude { get; }
@@ -27,6 +28,7 @@ namespace ZeafloServer.Domain.Commands.Places.CreatePlace
             Guid placeId,
             string name,
             string address,
+            string? description,    
             PlaceType type,
             Guid cityId,
             double latitude,
@@ -39,6 +41,7 @@ namespace ZeafloServer.Domain.Commands.Places.CreatePlace
             PlaceId = placeId;
             Name = name;
             Address = address;
+            Description = description;
             Type = type;
             CityId = cityId;
             Latitude = latitude;

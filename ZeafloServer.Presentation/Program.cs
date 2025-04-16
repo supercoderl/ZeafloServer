@@ -93,58 +93,8 @@ namespace ZeafloServer.Presentation
                 options.PayloadSerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             });
             builder.Services.AddMediatR(cfg => { cfg.RegisterServicesFromAssemblies(typeof(Program).Assembly); });
+            builder.Services.AddConsumers(rabbitConfiguration);
 
-            builder.Services.AddMassTransit(x =>
-            {
-                x.AddConsumer<FanoutEventConsumer>();
-                x.AddConsumer<GenerateQRCodeConsumer>();
-                x.AddConsumer<UploadConsumer>();
-
-                x.UsingRabbitMq((context, cfg) =>
-                {
-                    cfg.ConfigureNewtonsoftJsonSerializer(settings =>
-                    {
-                        settings.TypeNameHandling = TypeNameHandling.Objects;
-                        settings.NullValueHandling = NullValueHandling.Ignore;
-                        return settings;
-                    });
-                    cfg.UseNewtonsoftJsonSerializer();
-                    cfg.ConfigureNewtonsoftJsonDeserializer(settings =>
-                    {
-                        settings.TypeNameHandling = TypeNameHandling.Objects;
-                        settings.NullValueHandling = NullValueHandling.Ignore;
-                        return settings;
-                    });
-
-                    cfg.Host(rabbitConfiguration.Host, (ushort)rabbitConfiguration.Port, "/", h => {
-                        h.Username(rabbitConfiguration.Username);
-                        h.Password(rabbitConfiguration.Password);
-                    });
-
-                    // Every instance of the service will receive the message
-                    cfg.ReceiveEndpoint("zeaflo-fanout-event-" + Guid.NewGuid(), e =>
-                    {
-                        e.Durable = false;
-                        e.AutoDelete = true;
-                        e.ConfigureConsumer<FanoutEventConsumer>(context);
-                        e.DiscardSkippedMessages();
-                    });
-
-                    cfg.ReceiveEndpoint("zeaflo-qr-code-queue", e =>
-                    {
-                        e.ConfigureConsumer<GenerateQRCodeConsumer>(context);
-                        e.DiscardSkippedMessages();
-                    });
-
-                    cfg.ReceiveEndpoint("zeaflo-upload-queue", e =>
-                    {
-                        e.ConfigureConsumer<UploadConsumer>(context);
-                        e.DiscardSkippedMessages();
-                    });
-
-                    cfg.ConfigureEndpoints(context);
-                });
-            });
 
             builder.Services.AddLogging(x => x.AddSimpleConsole(console =>
             {

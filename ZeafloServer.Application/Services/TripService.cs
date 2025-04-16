@@ -238,6 +238,7 @@ namespace ZeafloServer.Application.Services
                 {
                     Place = new PlaceInfo
                     {
+                        PlaceId = coffee.PlaceId,
                         Name = coffee.Name,
                         Address = coffee.Address,
                         ImageUrl = coffee.PlaceImages.FirstOrDefault()?.ImageUrl
@@ -281,6 +282,7 @@ namespace ZeafloServer.Application.Services
                     {
                         Place = new PlaceInfo
                         {
+                            PlaceId = place.PlaceId,
                             Name = place.Name,
                             Address = place.Address,
                             ImageUrl = place.PlaceImages.FirstOrDefault()?.ImageUrl

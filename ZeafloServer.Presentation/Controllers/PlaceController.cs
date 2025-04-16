@@ -54,11 +54,30 @@ namespace ZeafloServer.Presentation.Controllers
         )
         {
             return Response(await _placeService.GetAllPlacesAsync(
-                query, 
-                status, 
-                types, 
-                searchTerm, 
+                query,
+                status,
+                types,
+                searchTerm,
                 sortQuery
+            ));
+        }
+
+        /// <summary>
+        /// Retrieves a place with its id
+        /// </summary>
+        /// <param name="placeId">The id to get right place</param>
+        /// <returns>Returns a place or an error message if the request is invalid.</returns>
+        [HttpGet("{placeId}")]
+        [AllowAnonymous]
+        [SwaggerOperation(Summary = "Get place by id", Description = "Return a place.")]
+        [SwaggerResponse(200, "Request successful", typeof(ResponseMessage<PlaceViewModel?>))]
+        [SwaggerResponse(400, "Invalid request")]
+        public async Task<IActionResult> GetPlaceByIdAsync(
+            [FromRoute] Guid placeId
+        )
+        {
+            return Response(await _placeService.GetPlaceByIdAsync(
+                placeId
             ));
         }
 

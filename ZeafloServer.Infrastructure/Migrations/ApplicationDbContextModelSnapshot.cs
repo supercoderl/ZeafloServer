@@ -244,7 +244,7 @@ namespace ZeafloServer.Infrastructure.Migrations
 
                     b.ToTable("MemberShipLevels", t =>
                         {
-                            t.HasCheckConstraint("CK_MemberShipLevel_Type", "type IN ('Silver', 'Gold', 'Diamond')");
+                            t.HasCheckConstraint("CK_MemberShipLevel_Type", "type IN ('Member', 'Silver', 'Gold', 'Diamond')");
                         });
                 });
 
@@ -444,6 +444,10 @@ namespace ZeafloServer.Infrastructure.Migrations
                     b.Property<bool>("Deleted")
                         .HasColumnType("boolean");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("text")
+                        .HasColumnName("description");
+
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
 
@@ -552,6 +556,45 @@ namespace ZeafloServer.Infrastructure.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("PlacesLike");
+                });
+
+            modelBuilder.Entity("ZeafloServer.Domain.Entities.Plan", b =>
+                {
+                    b.Property<Guid>("PlanId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("plan_id");
+
+                    b.Property<double>("AnnualPrice")
+                        .HasColumnType("double precision")
+                        .HasColumnName("annual_price");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text")
+                        .HasColumnName("description");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("MaxSeats")
+                        .HasColumnType("integer")
+                        .HasColumnName("max_seats");
+
+                    b.Property<double>("MonthlyPrice")
+                        .HasColumnType("double precision")
+                        .HasColumnName("monthly_price");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("name");
+
+                    b.HasKey("PlanId");
+
+                    b.ToTable("Plans");
                 });
 
             modelBuilder.Entity("ZeafloServer.Domain.Entities.Post", b =>
@@ -1149,6 +1192,52 @@ namespace ZeafloServer.Infrastructure.Migrations
                     b.ToTable("UserStatuses");
                 });
 
+            modelBuilder.Entity("ZeafloServer.Domain.Entities.UserSubscription", b =>
+                {
+                    b.Property<Guid>("UserSubscriptionId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_subcription_id");
+
+                    b.Property<bool>("Deleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("EndDate")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("end_date");
+
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<bool>("IsTrial")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_trial");
+
+                    b.Property<Guid?>("PaymentProviderId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("payment_provider_id");
+
+                    b.Property<Guid>("PlanId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("plan_id");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("timestamp")
+                        .HasColumnName("start_date");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("UserSubscriptionId");
+
+                    b.HasIndex("PlanId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserSubscriptions");
+                });
+
             modelBuilder.Entity("ZeafloServer.Domain.Entities.Comment", b =>
                 {
                     b.HasOne("ZeafloServer.Domain.Entities.Post", "Post")
@@ -1499,6 +1588,27 @@ namespace ZeafloServer.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("ZeafloServer.Domain.Entities.UserSubscription", b =>
+                {
+                    b.HasOne("ZeafloServer.Domain.Entities.Plan", "Plan")
+                        .WithMany("UserSubscriptions")
+                        .HasForeignKey("PlanId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_UserSubscription_Plan_PlanId");
+
+                    b.HasOne("ZeafloServer.Domain.Entities.User", "User")
+                        .WithMany("UserSubscriptions")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_UserSubscription_User_UserId");
+
+                    b.Navigation("Plan");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("ZeafloServer.Domain.Entities.City", b =>
                 {
                     b.Navigation("Places");
@@ -1516,6 +1626,11 @@ namespace ZeafloServer.Infrastructure.Migrations
                     b.Navigation("PlaceImages");
 
                     b.Navigation("PlaceLikes");
+                });
+
+            modelBuilder.Entity("ZeafloServer.Domain.Entities.Plan", b =>
+                {
+                    b.Navigation("UserSubscriptions");
                 });
 
             modelBuilder.Entity("ZeafloServer.Domain.Entities.Post", b =>
@@ -1579,6 +1694,8 @@ namespace ZeafloServer.Infrastructure.Migrations
                     b.Navigation("UserLevel");
 
                     b.Navigation("UserStatuses");
+
+                    b.Navigation("UserSubscriptions");
                 });
 #pragma warning restore 612, 618
         }

@@ -23,7 +23,7 @@ namespace ZeafloServer.Infrastructure.Configurations
                 .IsRequired()
                 .HasColumnType("int");
 
-            builder.ToTable(tb => tb.HasCheckConstraint("CK_MemberShipLevel_Type", "type IN ('Silver', 'Gold', 'Diamond')"));
+            builder.ToTable(tb => tb.HasCheckConstraint("CK_MemberShipLevel_Type", "type IN ('Member', 'Silver', 'Gold', 'Diamond')"));
         }
     }
 }

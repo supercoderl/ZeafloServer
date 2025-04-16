@@ -17,12 +17,16 @@ using ZeafloServer.Application.Queries.MemberShipLevels.GetAll;
 using ZeafloServer.Application.Queries.Messages.GetAll;
 using ZeafloServer.Application.Queries.Notifications.GetAll;
 using ZeafloServer.Application.Queries.PhotoPosts.GetAll;
+using ZeafloServer.Application.Queries.PhotoPosts.GetStorage;
 using ZeafloServer.Application.Queries.Places.GetAll;
+using ZeafloServer.Application.Queries.Places.GetById;
+using ZeafloServer.Application.Queries.Plans.GetAll;
 using ZeafloServer.Application.Queries.Posts.GetAll;
 using ZeafloServer.Application.Queries.TripDurations.GetAll;
 using ZeafloServer.Application.Queries.Users.GetAll;
 using ZeafloServer.Application.Queries.Users.GetById;
 using ZeafloServer.Application.Queries.Users.GetLevel;
+using ZeafloServer.Application.Queries.Weathers.GetWeather;
 using ZeafloServer.Application.Services;
 using ZeafloServer.Application.SortProviders;
 using ZeafloServer.Application.ViewModels;
@@ -36,11 +40,13 @@ using ZeafloServer.Application.ViewModels.Messages;
 using ZeafloServer.Application.ViewModels.Notifications;
 using ZeafloServer.Application.ViewModels.PhotoPosts;
 using ZeafloServer.Application.ViewModels.Places;
+using ZeafloServer.Application.ViewModels.Plans;
 using ZeafloServer.Application.ViewModels.Posts;
 using ZeafloServer.Application.ViewModels.Sorting;
 using ZeafloServer.Application.ViewModels.TripDurations;
 using ZeafloServer.Application.ViewModels.UserLevels;
 using ZeafloServer.Application.ViewModels.Users;
+using ZeafloServer.Application.ViewModels.Weathers;
 using ZeafloServer.Domain.Entities;
 
 namespace ZeafloServer.Application.Extensions
@@ -67,6 +73,8 @@ namespace ZeafloServer.Application.Extensions
             services.AddScoped<ITripDurationService, TripDurationService>();
             services.AddScoped<ITripService, TripService>();
             services.AddScoped<IPhotoPostService, PhotoPostService>();
+            services.AddScoped<IWeatherService, WeatherService>();
+            services.AddScoped<IPlanService, PlanService>();
 
             return services;
         }
@@ -100,6 +108,7 @@ namespace ZeafloServer.Application.Extensions
 
             // Place
             services.AddScoped<IRequestHandler<GetAllPlacesQuery, PageResult<PlaceViewModel>>, GetAllPlacesQueryHandler>();
+            services.AddScoped<IRequestHandler<GetPlaceByIdQuery, PlaceViewModel?>, GetPlaceByIdQueryHandler>();
 
             // Post
             services.AddScoped<IRequestHandler<GetAllPostsQuery, PageResult<PostViewModel>>, GetAllPostsQueryHandler>();
@@ -117,6 +126,13 @@ namespace ZeafloServer.Application.Extensions
 
             // PhotoPost
             services.AddScoped<IRequestHandler<GetAllPhotoPostsQuery, PageResult<PhotoPostViewModel>>, GetAllPhotoPostsQueryHandler>();
+            services.AddScoped<IRequestHandler<GetStorageQuery, List<StorageViewModel>>, GetStorageQueryHandler>();
+
+            // Weather
+            services.AddScoped<IRequestHandler<GetWeatherQuery, WeatherViewModel?>, GetWeatherQueryHandler>();
+
+            // Plan
+            services.AddScoped<IRequestHandler<GetAllPlansQuery, PageResult<PlanViewModel>>, GetAllPlansQueryHandler>();
 
             return services;
         }
@@ -136,6 +152,7 @@ namespace ZeafloServer.Application.Extensions
             services.AddScoped<ISortingExpressionProvider<UserViewModel, User>, UserViewModelSortProvider>();
             services.AddScoped<ISortingExpressionProvider<TripDurationViewModel, TripDuration>, TripDurationViewModelSortProvider>();
             services.AddScoped<ISortingExpressionProvider<PhotoPostViewModel, PhotoPost>, PhotoPostViewModelSortProvider>();
+            services.AddScoped<ISortingExpressionProvider<PlanViewModel, Plan>, PlanViewModelSortProvider>();
 
             return services;
         }

@@ -11,6 +11,7 @@ namespace ZeafloServer.Application.ViewModels.Places
     (
         string Name,
         string Address,
+        string? Description,
         PlaceType Type,
         Guid CityId,
         double Latitude,

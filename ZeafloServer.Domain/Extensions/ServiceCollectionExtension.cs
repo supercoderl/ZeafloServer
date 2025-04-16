@@ -1,7 +1,9 @@
 ﻿using CloudinaryDotNet;
+using MassTransit;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,16 +24,20 @@ using ZeafloServer.Domain.Commands.PlaceImages.CreatePlaceImage;
 using ZeafloServer.Domain.Commands.Places.CreatePlace;
 using ZeafloServer.Domain.Commands.Places.ImportPlace;
 using ZeafloServer.Domain.Commands.Places.ReactPlace;
+using ZeafloServer.Domain.Commands.Plans.CreatePlan;
+using ZeafloServer.Domain.Commands.Points.AddPoint;
 using ZeafloServer.Domain.Commands.PostMedias.CreatePostMedia;
 using ZeafloServer.Domain.Commands.Posts.CreatePost;
 using ZeafloServer.Domain.Commands.Posts.ReactPost;
 using ZeafloServer.Domain.Commands.Posts.SavePost;
 using ZeafloServer.Domain.Commands.Processes.CreateProcess;
 using ZeafloServer.Domain.Commands.Processes.UpdateProcess;
+using ZeafloServer.Domain.Commands.StoryActivities.LogActivity;
 using ZeafloServer.Domain.Commands.Tokens.CreateToken;
 using ZeafloServer.Domain.Commands.Tokens.UpdateToken;
 using ZeafloServer.Domain.Commands.TripDurations.CreateTripDuration;
 using ZeafloServer.Domain.Commands.Users.ChangePassword;
+using ZeafloServer.Domain.Commands.Users.ChangeUserAvatar;
 using ZeafloServer.Domain.Commands.Users.ForgotPassword;
 using ZeafloServer.Domain.Commands.Users.Login;
 using ZeafloServer.Domain.Commands.Users.RefreshToken;
@@ -39,10 +45,12 @@ using ZeafloServer.Domain.Commands.Users.Register;
 using ZeafloServer.Domain.Commands.Users.ResetPassword;
 using ZeafloServer.Domain.Commands.Users.RetrieveQr;
 using ZeafloServer.Domain.Commands.Users.UpdateUser;
+using ZeafloServer.Domain.Consumers;
 using ZeafloServer.Domain.Entities;
 using ZeafloServer.Domain.EventHandler.Fanout;
 using ZeafloServer.Domain.Helpers;
 using ZeafloServer.Domain.Interfaces;
+using ZeafloServer.Domain.Settings;
 
 namespace ZeafloServer.Domain.Extensions
 {
@@ -59,6 +67,7 @@ namespace ZeafloServer.Domain.Extensions
             services.AddScoped<IRequestHandler<ChangePasswordCommand, bool>, ChangePasswordCommandHandler>();
             services.AddScoped<IRequestHandler<RefreshTokenCommand, object?>, RefreshTokenCommandHandler>();
             services.AddScoped<IRequestHandler<RetrieveQrCommand, string>, RetrieveQrCommandHandler>();
+            services.AddScoped<IRequestHandler<ChangeUserAvatarCommand, string>, ChangeUserAvatarCommandHandler>();
 
             //Token
             services.AddScoped<IRequestHandler<CreateTokenCommand, Guid>, CreateTokenCommandHandler>();
@@ -116,6 +125,15 @@ namespace ZeafloServer.Domain.Extensions
             //Photo Post
             services.AddScoped<IRequestHandler<CreatePhotoPostCommand, Guid>, CreatePhotoPostCommandHandler>();
 
+            //User Level
+            services.AddScoped<IRequestHandler<AddPointCommand, Guid>, AddPointCommandHandler>();
+
+            //Story Activity
+            services.AddScoped<IRequestHandler<LogActivityCommand, Guid>, LogActivityCommandHandler>();
+
+            //Plan
+            services.AddScoped<IRequestHandler<CreatePlanCommand, Guid>, CreatePlanCommandHandler>();
+
             return services;
         }
         public static IServiceCollection AddNotificationHandlers(this IServiceCollection services)
@@ -156,6 +174,70 @@ namespace ZeafloServer.Domain.Extensions
                     configuration["CloudinaryConfiguration:ApiSecret"]
                 );
                 return new Cloudinary(cloudinaryAccount);
+            });
+
+            return services;
+        }
+
+        public static IServiceCollection AddConsumers(this IServiceCollection services, RabbitMqConfiguration rabbitConfiguration)
+        {
+            services.AddMassTransit(x =>
+            {
+                x.AddConsumer<FanoutEventConsumer>();
+                x.AddConsumer<GenerateQRCodeConsumer>();
+                x.AddConsumer<UploadConsumer>();
+                x.AddConsumer<GainPointConsumer>();
+
+                x.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.ConfigureNewtonsoftJsonSerializer(settings =>
+                    {
+                        settings.TypeNameHandling = TypeNameHandling.Objects;
+                        settings.NullValueHandling = NullValueHandling.Ignore;
+                        return settings;
+                    });
+                    cfg.UseNewtonsoftJsonSerializer();
+                    cfg.ConfigureNewtonsoftJsonDeserializer(settings =>
+                    {
+                        settings.TypeNameHandling = TypeNameHandling.Objects;
+                        settings.NullValueHandling = NullValueHandling.Ignore;
+                        return settings;
+                    });
+
+                    cfg.Host(rabbitConfiguration.Host, (ushort)rabbitConfiguration.Port, "/", h => {
+                        h.Username(rabbitConfiguration.Username);
+                        h.Password(rabbitConfiguration.Password);
+                    });
+
+                    // Every instance of the service will receive the message
+                    cfg.ReceiveEndpoint("zeaflo-fanout-event-" + Guid.NewGuid(), e =>
+                    {
+                        e.Durable = false;
+                        e.AutoDelete = true;
+                        e.ConfigureConsumer<FanoutEventConsumer>(context);
+                        e.DiscardSkippedMessages();
+                    });
+
+                    cfg.ReceiveEndpoint("zeaflo-qr-code-queue", e =>
+                    {
+                        e.ConfigureConsumer<GenerateQRCodeConsumer>(context);
+                        e.DiscardSkippedMessages();
+                    });
+
+                    cfg.ReceiveEndpoint("zeaflo-upload-queue", e =>
+                    {
+                        e.ConfigureConsumer<UploadConsumer>(context);
+                        e.DiscardSkippedMessages();
+                    });
+
+                    cfg.ReceiveEndpoint("zeaflo-gain-point-queue", e =>
+                    {
+                        e.ConfigureConsumer<GainPointConsumer>(context);
+                        e.DiscardSkippedMessages();
+                    });
+
+                    cfg.ConfigureEndpoints(context);
+                });
             });
 
             return services;

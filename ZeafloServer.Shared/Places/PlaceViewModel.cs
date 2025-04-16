@@ -12,6 +12,7 @@ namespace ZeafloServer.Shared.Places
          Guid PlaceId,
          string Name,
          string Address,
+         string? Description,
          PlaceType Type,
          Guid CityId,
          double Latitude,

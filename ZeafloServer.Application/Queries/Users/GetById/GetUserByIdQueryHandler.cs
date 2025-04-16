@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,16 @@ namespace ZeafloServer.Application.Queries.Users.GetById
 
         public async Task<UserViewModel?> Handle(GetUserByIdQuery request, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.GetByIdAsync(request.userId, u => u.Friends, u => u.FriendShips, u => u.UserLevel); //Missing ThenInclude
+            var user = await _userRepository.GetByIdAsync(request.userId, query =>
+                query
+                    .Include(f => f.Friends)
+                    .Include(fs => fs.FriendShips)
+                    .Where(u => u.UserLevel != null)
+                    .Include(ul => ul.UserLevel)
+                        .ThenInclude(ms => ms!.MemberShipLevel)
+                    .Include(us => us.UserSubscriptions)
+                        .ThenInclude(us => us.Plan)
+            );
 
             if (user == null)
             {
@@ -41,10 +51,14 @@ namespace ZeafloServer.Application.Queries.Users.GetById
                 return null;
             }
 
+            var sub = user.UserSubscriptions
+                .FirstOrDefault(us => us.IsTrial || us.IsActive);
+
             return UserViewModel.FromUser( 
                 user,
                 user.Friends.Count() + user.FriendShips.Count(),
-                new UserLevelInfo(user.UserLevel)
+                new UserLevelInfo(user.UserLevel),
+                sub != null ? new UserSubscriptionInfo(sub) : null
             );
         }
     }

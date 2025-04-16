@@ -19,6 +19,7 @@ namespace ZeafloServer.Domain.Commands.Places.ImportPlace
     {
         public string Name { get; set; }
         public string Address { get; set; }
+        public string? Description { get; set; }
         public PlaceType Type { get; set; }
         public string City { get; set; }
         public double Latitude { get; set; }
@@ -72,6 +73,7 @@ namespace ZeafloServer.Domain.Commands.Places.ImportPlace
                     Guid.NewGuid(),
                     row.Name,
                     row.Address,
+                    row.Description,
                     row.Type,
                     cityName,
                     row.Latitude,

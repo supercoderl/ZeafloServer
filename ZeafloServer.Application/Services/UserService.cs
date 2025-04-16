@@ -12,6 +12,7 @@ using ZeafloServer.Application.ViewModels;
 using ZeafloServer.Application.ViewModels.Sorting;
 using ZeafloServer.Application.ViewModels.Users;
 using ZeafloServer.Domain.Commands.Users.ChangePassword;
+using ZeafloServer.Domain.Commands.Users.ChangeUserAvatar;
 using ZeafloServer.Domain.Commands.Users.Login;
 using ZeafloServer.Domain.Commands.Users.RefreshToken;
 using ZeafloServer.Domain.Commands.Users.Register;
@@ -102,7 +103,8 @@ namespace ZeafloServer.Application.Services
             return UserViewModel.FromUser(
                 user,
                 user.Friends.Count() + user.FriendShips.Count(),
-                new UserLevelInfo(user.UserLevel)
+                new UserLevelInfo(user.UserLevel),
+                new UserSubscriptionInfo(user.UserSubscriptions.Where(us => us.IsActive || us.IsTrial).First())
             );
         }
 
@@ -128,6 +130,11 @@ namespace ZeafloServer.Application.Services
         public async Task<string> RetrieveQrAsync(Guid userId)
         {
             return await _bus.SendCommandAsync(new RetrieveQrCommand(userId));
+        }
+
+        public async Task<string> ChangeUserAvatarAsync(ChangeUserAvatarRequest request)
+        {
+            return await _bus.SendCommandAsync(new ChangeUserAvatarCommand(request.UserId, request.AvatarBase64String));
         }
     }
 }

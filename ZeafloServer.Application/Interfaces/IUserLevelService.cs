@@ -10,5 +10,6 @@ namespace ZeafloServer.Application.Interfaces
     public interface IUserLevelService
     {
         public Task<UserLevelViewModel?> GetUserLevelAsync(Guid userId);
+        public Task<Guid> AddPointAsync(AddPointRequest request);
     }
 }

@@ -34,6 +34,7 @@ namespace ZeafloServer.Domain.Commands.Places.CreatePlace
                 request.PlaceId,
                 request.Name,
                 request.Address,
+                request.Description,
                 request.Type,
                 request.CityId,
                 request.Latitude,

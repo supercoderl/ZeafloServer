@@ -16,6 +16,7 @@ namespace ZeafloServer.Domain.Errors
             public const string EmptyEmail = "USER_EMPTY_EMAIL";
             public const string EmptyPhoneNumber = "USER_EMPTY_PHONE_NUMBER";
             public const string EmptyQrUrl = "USER_EMPTY_QR_URL";
+            public const string EmptyAvatarBase64String = "USER_EMPTY_BASE_64_STRING";
 
             //User Password Validation
             public const string EmptyPassword = "USER_PASSWORD_MAY_NOT_BE_EMPTY";
@@ -136,6 +137,13 @@ namespace ZeafloServer.Domain.Errors
             //Trip Duration Validation
             public const string EmptyTripDurationId = "TRIP_DURATION_EMPTY_TRIP_DURATION_ID";
             public const string EmptyLabel = "TRIP_DURATION_EMPTY_LABEL";
+        }
+
+        public static class Plan
+        {
+            //Plan Validation
+            public const string EmptyPlanId = "PLAN_EMPTY_PLAN_ID";
+            public const string EmptyName = "PLAN_EMPTY_NAME";
         }
     }
 }

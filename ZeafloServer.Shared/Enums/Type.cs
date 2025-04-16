@@ -39,6 +39,7 @@ namespace ZeafloServer.Shared.Enums
 
     public enum LevelType
     {
+        Member,
         Silver,
         Gold,
         Diamond,

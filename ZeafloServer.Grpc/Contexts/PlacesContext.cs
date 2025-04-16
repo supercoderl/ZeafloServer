@@ -32,6 +32,7 @@ namespace ZeafloServer.Grpc.Contexts
                 Guid.Parse(place.Id),
                 place.Name,
                 place.Address,
+                place.Description,
                 (PlaceType)place.Type,
                 Guid.Parse(place.CityId),
                 place.Latitude,
